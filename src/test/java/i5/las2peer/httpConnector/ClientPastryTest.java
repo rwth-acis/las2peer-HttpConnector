@@ -43,7 +43,7 @@ public class ClientPastryTest {
 		
 		
 		final HttpConnector connector = new HttpConnector ();
-		connector.setHttpPort( 8080 );
+		connector.setPort( 8080 );
 		connector.start( node );
 		
 		String passPhrase = SimpleTools.createRandomString(20);

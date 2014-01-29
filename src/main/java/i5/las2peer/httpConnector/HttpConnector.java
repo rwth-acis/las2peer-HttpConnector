@@ -132,7 +132,7 @@ public class HttpConnector extends Connector
 	 * 
 	 * @param port
 	 */
-	public void setHttpPort ( int port ) {
+	public void setPort ( int port ) {
 		if ( port < 80 )
 			throw new IllegalArgumentException ( "illegal port number: " + port );
 		if ( myNode != null )

@@ -56,15 +56,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	private static final String DEFAULT_CODER_CLASS = i5.las2peer.httpConnector.coder.XmlCoder.class.getName();
 	//private static String coderClass = DEFAULT_CODER_CLASS;
 	
-	//private static final long DEFAULT_ANONYMOUS_ID = -1722613621014065292l; // anonymous.agent.xml
-	//private long lAnonymousId = DEFAULT_ANONYMOUS_ID;
-	
-	//private static final String DEFAULT_ANONYMOUS_PASS = "anonymous";
-	//private String sAnonymousPass = DEFAULT_ANONYMOUS_PASS;
-	
-	
 	private Agent anonymous = null;
-	
+
 	// enable access to file system
 	private static boolean enableFileAccess= false;
 	
@@ -99,23 +92,10 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	public void setConnector ( HttpConnector connector ) {
 		this.connector = connector;
 		l2pNode = connector.getL2pNode();
-		
 		anonymous = l2pNode.getAnonymous();
 	}
 	
-	/**
-	 * set the login data for the anonymous user
-	 * (agent t use on an unauthenticated create session request)
-	 * 
-	 * @param agentId
-	 * @param passphrase
-	 */
-	//public void setAnonymousLogin ( long agentId, String passphrase ) {
-	//	lAnonymousId = agentId;
-	//	sAnonymousPass = passphrase;
-	//}
 	
-		
 	/**
 	 * The core method of a RequestHandler. For each request, this method will be called.
 	 *
@@ -126,9 +106,9 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 *
 	 */
 	public void processRequest(HttpRequest request, HttpResponse response) throws Exception {
-		response.setHeaderField( "Server-Name", "Las2peer 0.1" );
+		response.setHeaderField( "Server-Name", "LAS2peer 0.0.3" );
 		
-		connector.logRequest(request.getPath()); //+"?"+request.getQueryString()); <--No Password logging!!
+		connector.logRequest(request.getPath());
 		
 		try
 		{
@@ -615,7 +595,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			Agent userAgent;
 			if ( user == null) {
 				userAgent = anonymous;
-			} else {
+			}
+			else{
 				if ( user.matches ("-?[0-9].*") ) {
 					try {
 						userId = Long.valueOf(user);
@@ -625,11 +606,10 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 				} else {
 					userId = l2pNode.getAgentIdForLogin(user);
 				}
-				
-				userAgent = l2pNode.getAgent(userId);
-				if ( ! (userAgent instanceof PassphraseAgent ))
-					throw new L2pSecurityException ("Agent is not passphrase protected!");
-				((PassphraseAgent)userAgent).unlockPrivateKey(passwd);
+			userAgent = l2pNode.getAgent(userId);
+			if ( ! (userAgent instanceof PassphraseAgent ))
+				throw new L2pSecurityException ("Agent is not passphrase protected!");
+			((PassphraseAgent)userAgent).unlockPrivateKey(passwd);
 			}
 			
 			long lTimeout = connector.getDefaultSessionTimeout();

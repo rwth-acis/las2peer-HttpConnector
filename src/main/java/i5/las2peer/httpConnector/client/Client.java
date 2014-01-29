@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 
 /**
- * The connector client is the basic class for accessing a remote LAS server
+ * The connector client is the basic class for accessing a remote LAS2peer server
  * via the http connector within any java application.
  *
  * @author Holger Jan&szlig;en
@@ -178,7 +178,7 @@ public class Client {
 	
 	/**
 	 *
-	 * @return   name of the las user
+	 * @return   name of the LAS2peer user
 	 *
 	 */
 	public String getUser () {
@@ -369,9 +369,9 @@ public class Client {
 	}
 	
 	/**
-	 * Tries to connect to the las server with the current connection data.
+	 * Tries to connect to the LAS2peer server with the current connection data.
 	 *
-	 * This method will be implicitly called on an attepmt to use a not existing connection.
+	 * This method will be implicitly called on an attempt to use a not existing connection.
 	 *
 	 * @exception   AuthenticationFailedException
 	 * @exception   UnableToConnectException
@@ -427,7 +427,7 @@ public class Client {
 			String type = conn.getContentType();
 			
 			if ( ! "text/xml".equals ( type ) )
-				throw new UnableToConnectException ( "Invalid Server answer: " + type + " - is this a las server?" );
+				throw new UnableToConnectException ( "Invalid Server answer: " + type + " - is this a LAS2peer server?" );
 			
 			String content = readHttpContent ( (InputStream) conn.getContent(), length );
 			try {
