@@ -106,7 +106,7 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 *
 	 */
 	public void processRequest(HttpRequest request, HttpResponse response) throws Exception {
-		response.setHeaderField( "Server-Name", "LAS2peer 0.0.3" );
+		response.setHeaderField( "Server-Name", "LAS2peer v0.0.3.4" );
 		
 		connector.logRequest(request.getPath());
 		

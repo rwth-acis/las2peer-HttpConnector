@@ -29,64 +29,64 @@ public class HttpConnector extends Connector
 {
 	
 	/* configuration parameters */
-	public static final int DEFAULT_HTTP_CONNECTOR_PORT = 8080;
+	private int DEFAULT_HTTP_CONNECTOR_PORT = 8080;
 	protected int httpConnectorPort = DEFAULT_HTTP_CONNECTOR_PORT;
 	
-	public static final int DEFAULT_HTTPS_CONNECTOR_PORT = 8090;
+	private int DEFAULT_HTTPS_CONNECTOR_PORT = 8090;
 	protected int httpsConnectorPort = DEFAULT_HTTPS_CONNECTOR_PORT;
 	
-	public static final boolean DEFAULT_START_HTTP_CONNECTOR = true;
+	private boolean DEFAULT_START_HTTP_CONNECTOR = true;
 	protected boolean startHttpConnector = DEFAULT_START_HTTP_CONNECTOR;
 	
-	public static final boolean DEFAULT_START_HTTPS_CONNECTOR = false;
+	private boolean DEFAULT_START_HTTPS_CONNECTOR = false;
 	protected boolean startHttpsConnector = DEFAULT_START_HTTPS_CONNECTOR;
 	
-	public static final String DEFAULT_SSL_KEYSTORE = "keys/ssl";
+	private String DEFAULT_SSL_KEYSTORE = "keys/ssl";
 	protected String sslKeystore = DEFAULT_SSL_KEYSTORE;
 	
-	public static final String DEFAULT_SSL_KEY_PASSWD = "123456";
+	private String DEFAULT_SSL_KEY_PASSWD = "123456";
 	protected String sslKeyPasswd = DEFAULT_SSL_KEY_PASSWD;
 	
-	public static final boolean DEFAULT_ENABLE_FILE_ACCESS = false;
+	private boolean DEFAULT_ENABLE_FILE_ACCESS = false;
 	protected boolean enableFileAccess = DEFAULT_ENABLE_FILE_ACCESS;
 	
-	public static final String DEFAULT_FILE_DIRECTORY = "./htdocs";
+	private String DEFAULT_FILE_DIRECTORY = "./htdocs";
 	protected String fileDirectory = DEFAULT_FILE_DIRECTORY;
 	
-	public static final long DEFAULT_MAX_SESSION_TIMEOUT = 30*60*60 * 1000; // 30 minutes
+	private long DEFAULT_MAX_SESSION_TIMEOUT = 30*60*60 * 1000; // 30 minutes
 	protected long maxSessionTimeoutMS = DEFAULT_MAX_SESSION_TIMEOUT;
 	
-	public static final long DEFAULT_MIN_SESSION_TIMEOUT = 30 * 1000; // 30 seconds
+	private long DEFAULT_MIN_SESSION_TIMEOUT = 30 * 1000; // 30 seconds
 	protected long minSessionTimeoutMS = DEFAULT_MIN_SESSION_TIMEOUT;
 	
-	public static final long DEFAULT_DEFAULT_SESSION_TIMEOUT = 10*60*60 * 1000; // 10 minutes
+	private long DEFAULT_DEFAULT_SESSION_TIMEOUT = 10*60*60 * 1000; // 10 minutes
 	protected long defaultSessionTimeout = DEFAULT_DEFAULT_SESSION_TIMEOUT;
 	
-	public static final long DEFAULT_DEFAULT_PERSISTENT_OUTDATE_S = 60 * 60 * 24 * 1000; // 1 day
+	private long DEFAULT_DEFAULT_PERSISTENT_OUTDATE_S = 60 * 60 * 24 * 1000; // 1 day
 	protected long defaultPersistentTimeoutMS = DEFAULT_DEFAULT_PERSISTENT_OUTDATE_S;
 	
-	public static final long DEFAULT_MIN_PERSISTENT_OUTDATE_S = 60 * 60 * 1000; // 1 hour
+	private long DEFAULT_MIN_PERSISTENT_OUTDATE_S = 60 * 60 * 1000; // 1 hour
 	protected long minPersistentTimeoutMS = DEFAULT_MIN_PERSISTENT_OUTDATE_S;
 	
-	public static final long DEFAULT_MAX_PERSISTENT_OUTDATE_S = 60 * 60 * 1000; // 1 hour
+	private long DEFAULT_MAX_PERSISTENT_OUTDATE_S = 60 * 60 * 1000; // 1 hour
 	protected long maxPersistentTimeoutMS = DEFAULT_MAX_PERSISTENT_OUTDATE_S;
 	
-	public static final boolean DEFAULT_PRINT_SEC_EXCEPTIONS = false;
+	private boolean DEFAULT_PRINT_SEC_EXCEPTIONS = false;
 	protected boolean printSecExceptions = DEFAULT_PRINT_SEC_EXCEPTIONS;
 	
-	public static final int DEFAULT_SOCKET_TIMEOUT = 60*1000; // 1 minute
+	private int DEFAULT_SOCKET_TIMEOUT = 60*1000; // 1 minute
 	protected int socketTimeout = DEFAULT_SOCKET_TIMEOUT;
 	
-	public static final String DEFAULT_CROSS_ORIGIN_RESOURCE_DOMAIN = "http://role-is.dbis.rwth-aachen.de:9080";
+	private String DEFAULT_CROSS_ORIGIN_RESOURCE_DOMAIN = "";
 	protected String crossOriginResourceDomain = DEFAULT_CROSS_ORIGIN_RESOURCE_DOMAIN;
 	
-	public static final int DEFAULT_CROSS_ORIGIN_RESOURCE_MAX_AGE = 60;
+	private int DEFAULT_CROSS_ORIGIN_RESOURCE_MAX_AGE = 60;
 	protected int crossOriginResourceMaxAge = DEFAULT_CROSS_ORIGIN_RESOURCE_MAX_AGE;
 
-	public static final boolean DEFAULT_ENABLE_CROSS_ORIGIN_RESOURCE_SHARING = true;
+	private boolean DEFAULT_ENABLE_CROSS_ORIGIN_RESOURCE_SHARING = false;
 	protected boolean enableCrossOriginResourceSharing = DEFAULT_ENABLE_CROSS_ORIGIN_RESOURCE_SHARING;
 	
-	public static final boolean DEFAULT_PREFER_LOCAL_SERVICES = true;
+	private boolean DEFAULT_PREFER_LOCAL_SERVICES = true;
 	protected boolean preferLocalServices = DEFAULT_PREFER_LOCAL_SERVICES;
 	
 	
@@ -97,7 +97,7 @@ public class HttpConnector extends Connector
 	private Node myNode = null;
 	
 	
-	private final static String DEFAULT_LOGFILE = "log/httpConnector.log";
+	private String DEFAULT_LOGFILE = "log/httpConnector.log";
 	
 	
 	private PrintStream logStream = null;
@@ -109,7 +109,7 @@ public class HttpConnector extends Connector
 	 * @throws FileNotFoundException
 	 */
 	public HttpConnector () throws FileNotFoundException {
-		super.setFieldValues();
+		setFieldValues();
 		
 		if ( enableFileAccess )
 			System.out.println ( "HttpConnector: Warning - File Access is enabled!");
