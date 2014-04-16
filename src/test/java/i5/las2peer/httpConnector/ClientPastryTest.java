@@ -34,6 +34,7 @@ public class ClientPastryTest {
 	public void setup () throws Exception {
 		// start a launcher
 		node = new PastryNodeImpl(9001, "NEW");
+		node.setLogfilePrefix("log/l2p-node_");
 		node.launch();
 		
 		UserAgent agent = MockAgentFactory.getEve(); agent.unlockPrivateKey("evespass");
