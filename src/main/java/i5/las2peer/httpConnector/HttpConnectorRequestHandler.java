@@ -106,7 +106,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 *
 	 */
 	public void processRequest(HttpRequest request, HttpResponse response) throws Exception {
-		response.setHeaderField( "Server-Name", "LAS2peer v0.0.3.4" );
+		response.setHeaderField( "Server-Name", "LAS2peer v0.0.3.8" );
+		response.setHeaderField("Access-Control-Allow-Origin", "*");
 		
 		connector.logRequest(request.getPath());
 		
