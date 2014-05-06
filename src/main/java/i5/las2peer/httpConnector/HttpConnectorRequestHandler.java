@@ -251,9 +251,11 @@ public class HttpConnectorRequestHandler implements RequestHandler {
         String appCode = request.getGetVar("appcode");
         HttpSession session = htSessions.get(sid);
 
-        if (session == null)
+        if (session == null) {
             sendUnauthorizedResponse(response, "No corresponding session available!", request.getRemoteAddress()
                     + ": closesession request for unknown session " + sid);
+            return;
+        }
 
         session.checkRemoteAccess(request);
 
