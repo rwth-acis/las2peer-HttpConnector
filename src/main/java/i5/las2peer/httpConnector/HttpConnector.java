@@ -11,6 +11,7 @@ import i5.las2peer.p2p.AgentNotKnownException;
 import i5.las2peer.p2p.Node;
 import i5.las2peer.security.Agent;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -123,6 +124,8 @@ public class HttpConnector extends Connector
 	 * @throws FileNotFoundException
 	 */
 	public void setLogFile ( String filename) throws FileNotFoundException {
+		// auto create log directory if it doesn't exist
+		new File(filename.substring(0, filename.lastIndexOf(File.separator))).mkdirs();
 		setLogStream ( new PrintStream ( new FileOutputStream ( filename, true )));
 	}
 	
