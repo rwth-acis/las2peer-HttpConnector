@@ -194,8 +194,9 @@ public class HttpConnector extends Connector {
 			if (enableCrossOriginResourceSharing) {
 				http = new HttpServer(HttpConnectorRequestHandler.class.getName(), httpConnectorPort,
 						crossOriginResourceDomain, crossOriginResourceMaxAge);
-			} else
+			} else {
 				http = new HttpServer(HttpConnectorRequestHandler.class.getName(), httpConnectorPort);
+			}
 
 			http.setSocketTimeout(socketTimeout);
 
@@ -217,12 +218,13 @@ public class HttpConnector extends Connector {
 		}
 
 		if (startHttpsConnector) {
-			if (enableCrossOriginResourceSharing)
-				https = new HttpsServer(sslKeystore, sslKeyPasswd, RequestHandler.class.getName(), httpsConnectorPort,
-						crossOriginResourceDomain, crossOriginResourceMaxAge);
-			else
+			if (enableCrossOriginResourceSharing) {
+				https = new HttpsServer(sslKeystore, sslKeyPasswd, HttpConnectorRequestHandler.class.getName(),
+						httpsConnectorPort, crossOriginResourceDomain, crossOriginResourceMaxAge);
+			} else {
 				https = new HttpsServer(sslKeystore, sslKeyPasswd, HttpConnectorRequestHandler.class.getName(),
 						httpsConnectorPort);
+			}
 
 			https.setSocketTimeout(socketTimeout);
 			https.start();
