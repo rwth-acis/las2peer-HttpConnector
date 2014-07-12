@@ -85,12 +85,13 @@ public class HttpConnector extends Connector {
 	private boolean DEFAULT_PREFER_LOCAL_SERVICES = true;
 	protected boolean preferLocalServices = DEFAULT_PREFER_LOCAL_SERVICES;
 
+	private String DEFAULT_LOGFILE = "log/httpConnector.log";
+	private String logfile = DEFAULT_LOGFILE;
+
 	private HttpServer http;
 	private HttpsServer https;
 
 	private Node myNode = null;
-
-	private String DEFAULT_LOGFILE = "log/httpConnector.log";
 
 	private PrintStream logStream = null;
 	private DateFormat dateFormat = DateFormat.getDateTimeInstance();
@@ -173,9 +174,9 @@ public class HttpConnector extends Connector {
 
 		if (logStream == null)
 			try {
-				setLogFile(DEFAULT_LOGFILE);
+				setLogFile(logfile);
 			} catch (FileNotFoundException e) {
-				throw new ConnectorException("cannot initialize standard log file at " + DEFAULT_LOGFILE, e);
+				throw new ConnectorException("cannot initialize standard log file at " + logfile, e);
 			}
 
 		myNode = node;
