@@ -16,59 +16,56 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * The connector client is the basic class for accessing a remote LAS2peer server
  * via the http connector within any java application.
  *
- * @author Holger Jan&szlig;en
  */
 
 public class Client {
+
 	public static final int DEFAULT_PORT = 8080;
-	public static final long DEFAULT_TIMEOUT_MS = 60*60*10; // 10 minutes
-	public static final long DEFAULT_OUTDATE_S  = 60 * 60 * 24; // 1 day
-	
-	
+	public static final long DEFAULT_TIMEOUT_MS = 60 * 60 * 10; // 10 minutes
+	public static final long DEFAULT_OUTDATE_S = 60 * 60 * 24; // 1 day
+
 	public static final int WAIT_INTERVAL = 200;
-	public static final int MAX_WAIT = 10*1000;
-	
+	public static final int MAX_WAIT = 10 * 1000;
+
 	public static final String DEFAULT_CODER = "i5.las2peer.httpConnector.coder.XmlCoder";
 	public static final String DEFAULT_DECODER = "i5.las2peer.httpConnector.coder.XmlDecoder";
-	
+
 	private String coderClass = DEFAULT_CODER;
 	private String decoderClass = DEFAULT_DECODER;
-	
+
 	private String sHost;
 	private int iPort = DEFAULT_PORT;
-	
+
 	private String sUser = null;
 	private String sPasswd = null;
-	
+
 	private long lTimeOutMs = DEFAULT_TIMEOUT_MS;
-	
+
 	private boolean bConnected = false;
 	private String sSessionId = null;
-	
-	
+
 	//private boolean bUsePersistent = false;
 	private long lOutdateS = DEFAULT_OUTDATE_S;
-	
+
 	private boolean bTryPersistent = false;
 	private boolean bIsPersistent = false;
-	
+
 	private boolean bUseHttps = false;
-	
+
 	/**
 	 * Constructor
 	 *
 	 * @param    host                target host name
 	 *
 	 */
-	public Client ( String host ) {
+	public Client(String host) {
 		sHost = host;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -76,11 +73,11 @@ public class Client {
 	 * @param    port                http connector port on the target host
 	 *
 	 */
-	public Client ( String host, int port ) {
+	public Client(String host, int port) {
 		sHost = host;
 		iPort = port;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -90,14 +87,12 @@ public class Client {
 	 * @param    passwd              password
 	 *
 	 */
-	public Client ( String host, int port, String user, String passwd ) {
-		this ( host, port );
+	public Client(String host, int port, String user, String passwd) {
+		this(host, port);
 		sUser = user;
 		sPasswd = passwd;
 	}
-	
-	
-	
+
 	/**
 	 * Constructor for reataching to a remote session
 	 *
@@ -108,13 +103,13 @@ public class Client {
 	 * @param    session             a  String
 	 *
 	 */
-	public Client ( String host, int port, String user, String passwd, String session ) {
-		this ( host, port, user, passwd );
-		
+	public Client(String host, int port, String user, String passwd, String session) {
+		this(host, port, user, passwd);
+
 		this.sSessionId = session;
 		this.bTryPersistent = true;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -123,12 +118,12 @@ public class Client {
 	 * @param    timeout             timeout of the generated session in milliseconds
 	 *
 	 */
-	public Client ( String host, int port, long timeout ) {
+	public Client(String host, int port, long timeout) {
 		sHost = host;
 		iPort = port;
 		lTimeOutMs = timeout;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -136,11 +131,11 @@ public class Client {
 	 * @param    timeout             timeout of the generated session in milliseconds
 	 *
 	 */
-	public Client ( String host, long timeout ) {
+	public Client(String host, long timeout) {
 		sHost = host;
 		lTimeOutMs = timeout;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -151,15 +146,14 @@ public class Client {
 	 * @param    passwd              password
 	 *
 	 */
-	public Client ( String host, int port, long timeout, String user, String passwd ) {
+	public Client(String host, int port, long timeout, String user, String passwd) {
 		sHost = host;
 		iPort = port;
 		lTimeOutMs = timeout;
 		sUser = user;
 		sPasswd = passwd;
 	}
-	
-	
+
 	/**
 	 * set the password for the current user
 	 *
@@ -168,24 +162,22 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setPasswd ( String passwd ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
-		
+	public void setPasswd(String passwd) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
+
 		sPasswd = passwd;
 	}
-	
-	
+
 	/**
 	 *
 	 * @return   name of the LAS2peer user
 	 *
 	 */
-	public String getUser () {
+	public String getUser() {
 		return sUser;
 	}
-	
-	
+
 	/**
 	 * set the user login name for connecting to the remote las server
 	 *
@@ -194,22 +186,22 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setUser ( String user ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
+	public void setUser(String user) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
 
 		sUser = user;
 	}
-	
+
 	/**
 	 *
 	 * @return   name or ip of the las server host
 	 *
 	 */
-	public String getHost () {
+	public String getHost() {
 		return sHost;
 	}
-	
+
 	/**
 	 * Set the target host of the las server to connect to
 	 *
@@ -218,23 +210,22 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setHost ( String host ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
+	public void setHost(String host) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
 
 		sHost = host;
 	}
-	
+
 	/**
 	 *
 	 * @return   the number of the used port at the las server
 	 *
 	 */
-	public int getPort () {
+	public int getPort() {
 		return iPort;
 	}
-	
-	
+
 	/**
 	 * Set the port of the connector
 	 *
@@ -243,15 +234,13 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setPort ( int port ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
-		
+	public void setPort(int port) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
+
 		iPort = port;
 	}
-	
-	
-	
+
 	/**
 	 * set the flag if the client is to try to open persistent sessions
 	 *
@@ -260,46 +249,42 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setTryPersistent ( boolean tryP ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
+	public void setTryPersistent(boolean tryP) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
 
 		bTryPersistent = tryP;
 	}
-	
-	
+
 	/**
 	 * returns of the client tries to open persistent sessions
 	 *
 	 * @return   a boolean
 	 *
 	 */
-	public boolean getTryPersistent ()  {
+	public boolean getTryPersistent() {
 		return bTryPersistent;
 	}
-	
-	
+
 	/**
 	 * returns true if the client is connected and the session is persistent
 	 *
 	 * @return   a boolean
 	 *
 	 */
-	public boolean isPersistent () {
+	public boolean isPersistent() {
 		return bConnected && bIsPersistent;
 	}
-	
-	
+
 	/**
 	 * return the (tried or real) session timeout in ms
 	 *
 	 * @return   a long
 	 *
 	 */
-	public long getSessionTimeout () {
+	public long getSessionTimeout() {
 		return lTimeOutMs;
 	}
-	
 
 	/**
 	 * Set the session timeout value to be requested on the next connection opening
@@ -309,23 +294,23 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setSessionTimeout ( long time ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
-		
+	public void setSessionTimeout(long time) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
+
 		lTimeOutMs = time;
 	}
-	
+
 	/**
 	 * return the (tried or real) session outdate time in s
 	 *
 	 * @return   a long
 	 *
 	 */
-	public long getSessionOutdate () {
+	public long getSessionOutdate() {
 		return lOutdateS;
 	}
-	
+
 	/**
 	 * set the outedate time to use for opening new sessions
 	 *
@@ -334,14 +319,13 @@ public class Client {
 	 * @exception   ConnectorClientException 	client is currently connected
 	 *
 	 */
-	public void setSessionOutdate ( long outdate ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change the client setting during a session!" );
+	public void setSessionOutdate(long outdate) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change the client setting during a session!");
 
 		lOutdateS = outdate;
 	}
 
-	
 	/**
 	 * returns if the client uses an https connection to the remote las
 	 *
@@ -351,8 +335,7 @@ public class Client {
 	public boolean isUsingHttps() {
 		return bUseHttps;
 	}
-	
-	
+
 	/**
 	 * change the setting for the usage of the https protocol
 	 *
@@ -361,13 +344,13 @@ public class Client {
 	 * @exception   ConnectorClientException
 	 *
 	 */
-	public void setUseHttps ( boolean use ) throws ConnectorClientException {
-		if ( bConnected )
-			throw new ConnectorClientException ( "Don't change client settings during a session!" );
-		
+	public void setUseHttps(boolean use) throws ConnectorClientException {
+		if (bConnected)
+			throw new ConnectorClientException("Don't change client settings during a session!");
+
 		bUseHttps = use;
 	}
-	
+
 	/**
 	 * Tries to connect to the LAS2peer server with the current connection data.
 	 *
@@ -377,111 +360,113 @@ public class Client {
 	 * @exception   UnableToConnectException
 	 *
 	 */
-	public void connect () throws AuthenticationFailedException, UnableToConnectException {
-		if ( bConnected )
+	public void connect() throws AuthenticationFailedException, UnableToConnectException {
+		if (bConnected)
 			return;
-		
-		if ( sSessionId != null )
+
+		if (sSessionId != null)
 			reattachToSession();
 		else
 			createSession();
 	}
-		
-	
+
 	/**
 	 * Tries to open a new session with the current connection data
 	 *
 	 * @exception   UnableToConnectException
 	 *
 	 */
-	private void createSession () throws UnableToConnectException, AuthenticationFailedException {
-		if ( bConnected ) return;
+	private void createSession() throws UnableToConnectException, AuthenticationFailedException {
+		if (bConnected)
+			return;
 		bIsPersistent = false;
-		
+
 		String sProtocol = (bUseHttps) ? "https://" : "http://";
 		String sTimeout = "timeout=" + lTimeOutMs;
-		
+
 		try {
 			String sUrl = "";
-			if ( sUser == null )
-				sUrl = sProtocol + sHost + ":" + iPort + "/createsession?" + sTimeout ;
+			if (sUser == null)
+				sUrl = sProtocol + sHost + ":" + iPort + "/createsession?" + sTimeout;
 			else
-				sUrl = sProtocol + sHost + ":" + iPort + "/createsession?user=" + sUser + "&passwd=" + sPasswd + "&" + sTimeout;
+				sUrl = sProtocol + sHost + ":" + iPort + "/createsession?user=" + sUser + "&passwd=" + sPasswd + "&"
+						+ sTimeout;
 
-			if ( bTryPersistent ) {
-				if ( sUser == null )
+			if (bTryPersistent) {
+				if (sUser == null)
 					sUrl += "?";
 				else
 					sUrl += "&";
 				sUrl += "persistent=1&outdate=" + lOutdateS;
 			}
 
-			URL url = new URL ( sUrl );
-			
+			URL url = new URL(sUrl);
+
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			int length = conn.getContentLength();
-			
-			if ( conn.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED )
+
+			if (conn.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED)
 				throw new AuthenticationFailedException();
-			
+
 			String type = conn.getContentType();
-			
-			if ( ! "text/xml".equals ( type ) )
-				throw new UnableToConnectException ( "Invalid Server answer: " + type + " - is this a LAS2peer server?" );
-			
-			String content = readHttpContent ( (InputStream) conn.getContent(), length );
+
+			if (!"text/xml".equals(type))
+				throw new UnableToConnectException("Invalid Server answer: " + type + " - is this a LAS2peer server?");
+
+			String content = readHttpContent((InputStream) conn.getContent(), length);
 			try {
-				interpretSessionContent ( content );
+				interpretSessionContent(content);
 			} catch (InvalidServerAnswerException e) {
-				throw new UnableToConnectException ( "Problems interpreting server response to create session request!", e );
+				throw new UnableToConnectException("Problems interpreting server response to create session request!",
+						e);
 			}
 			bConnected = true;
 		} catch (IOException e) {
-			throw new UnableToConnectException ( e );
-		} catch ( UnableToConnectException e ) {
-			if ( bTryPersistent ) {
+			throw new UnableToConnectException(e);
+		} catch (UnableToConnectException e) {
+			if (bTryPersistent) {
 				// try a non-persistent session!
 				bTryPersistent = false;
 				createSession();
 			} else {
 				throw e;
 			}
-			
+
 		}
 	}
-	
-	
+
 	/**
 	 * tries to reattach to an existing (persitent) session using the current
 	 * connection data
 	 *
 	 */
-	private void reattachToSession () throws UnableToConnectException {
-		if ( bConnected ) return;
-		
+	private void reattachToSession() throws UnableToConnectException {
+		if (bConnected)
+			return;
+
 		String sProtocol = (bUseHttps) ? "https://" : "http://";
-		
-		if ( sUser == null || sPasswd == null )
-			throw new UnableToConnectException ( "No user / Password given for reattaching" );
-		if ( sSessionId == null )
-			throw new UnableToConnectException ( "No session id given for reattaching" );
-		
+
+		if (sUser == null || sPasswd == null)
+			throw new UnableToConnectException("No user / Password given for reattaching");
+		if (sSessionId == null)
+			throw new UnableToConnectException("No session id given for reattaching");
+
 		try {
-			URL url = new URL ( sProtocol + sHost + ":" + iPort + "/attachsession?user=" + sUser + "&passwd=" + sPasswd + "&SESSION=" + sSessionId );
+			URL url = new URL(sProtocol + sHost + ":" + iPort + "/attachsession?user=" + sUser + "&passwd=" + sPasswd
+					+ "&SESSION=" + sSessionId);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
-			if ( conn.getResponseCode() != HttpURLConnection.HTTP_OK )
-				throw new UnableToConnectException ( "Unable to connect to remote session - response code: " + conn.getResponseCode() ) ;
-			
+
+			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK)
+				throw new UnableToConnectException("Unable to connect to remote session - response code: "
+						+ conn.getResponseCode());
+
 			bConnected = true;
 			bIsPersistent = true;
 		} catch (IOException e) {
-			throw new UnableToConnectException ( "IOException during connection attempt!", e );
+			throw new UnableToConnectException("IOException during connection attempt!", e);
 		}
 	}
-	
-	
-	
+
 	/**
 	 * disconnects an open connection
 	 *
@@ -489,30 +474,31 @@ public class Client {
 	 * @exception   UnableToConnectException
 	 *
 	 */
-	public void disconnect () throws InvalidServerAnswerException, UnableToConnectException {
-		if ( ! bConnected ) return;
+	public void disconnect() throws InvalidServerAnswerException, UnableToConnectException {
+		if (!bConnected)
+			return;
 
 		String sProtocol = (bUseHttps) ? "https://" : "http://";
-		
+
 		try {
-			URL url = new URL ( sProtocol + sHost + ":" + iPort + "/closesession?SESSION=" + sSessionId );
+			URL url = new URL(sProtocol + sHost + ":" + iPort + "/closesession?SESSION=" + sSessionId);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			//int length = conn.getContentLength();
-			
-			if ( conn.getResponseCode() == HttpURLConnection.HTTP_PRECON_FAILED ) {
+
+			if (conn.getResponseCode() == HttpURLConnection.HTTP_PRECON_FAILED) {
 				// session expired
-			} else if ( conn.getResponseCode() != HttpURLConnection.HTTP_OK ) {
-				throw new InvalidServerAnswerException ( "Returncode from server: " + conn.getResponseCode() );
+			} else if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				throw new InvalidServerAnswerException("Returncode from server: " + conn.getResponseCode());
 			}
-			
+
 			bConnected = false;
 			sSessionId = null;
 		} catch (IOException e) {
 			bConnected = false;
-			throw new UnableToConnectException ( e );
+			throw new UnableToConnectException(e);
 		}
 	}
-	
+
 	/**
 	 * tries to detach from the current session
 	 *
@@ -520,27 +506,25 @@ public class Client {
 	 * @exception   ConnectorClientException
 	 *
 	 */
-	public void detach () throws InvalidServerAnswerException, ConnectorClientException {
-		if ( ! bConnected ) return;
+	public void detach() throws InvalidServerAnswerException, ConnectorClientException {
+		if (!bConnected)
+			return;
 
 		String sProtocol = (bUseHttps) ? "https://" : "http://";
 
 		try {
-			URL url = new URL ( sProtocol + sHost + ":" + iPort + "/detachsession?SESSION=" + sSessionId );
+			URL url = new URL(sProtocol + sHost + ":" + iPort + "/detachsession?SESSION=" + sSessionId);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
-			if ( conn.getResponseCode() != HttpURLConnection.HTTP_OK )
-				throw new ConnectorClientException ("Unable to detach - response code: " + conn.getResponseCode() );
+
+			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK)
+				throw new ConnectorClientException("Unable to detach - response code: " + conn.getResponseCode());
 			else
 				bConnected = false;
 		} catch (IOException e) {
-			throw new ConnectorClientException ("Unable to detach - IOException in connection",  e );
+			throw new ConnectorClientException("Unable to detach - IOException in connection", e);
 		}
 	}
-	
-	
-	
-	
+
 	/**
 	 * reads the content of an http answer into a resulting string
 	 * the length of the expected content if given by the length parameter
@@ -552,58 +536,57 @@ public class Client {
 	 *
 	 */
 	private String readHttpContent(InputStream content, int length) throws UnableToConnectException, IOException {
-		
+
 		int iWait = 0;
-		while ( content.available() < length ) {
+		while (content.available() < length) {
 			iWait += WAIT_INTERVAL;
 			try {
-				Thread.sleep ( WAIT_INTERVAL );
-			} catch (InterruptedException e) {}
-			
-			if ( iWait >= MAX_WAIT )
-				throw new UnableToConnectException ( "Timeout at " + iWait + " milliseconds!" );
+				Thread.sleep(WAIT_INTERVAL);
+			} catch (InterruptedException e) {
+			}
+
+			if (iWait >= MAX_WAIT)
+				throw new UnableToConnectException("Timeout at " + iWait + " milliseconds!");
 		}
-		
-		InputStreamReader isr = new InputStreamReader ( content );
+
+		InputStreamReader isr = new InputStreamReader(content);
 		char[] con = new char[length];
-		isr.read ( con );
-		String sContent = new String ( con );
-		
+		isr.read(con);
+		String sContent = new String(con);
+
 		return sContent;
 	}
-	
-	
+
 	/**
 	 * Set the code class to be used for encoding message parameters
 	 *
 	 * @param    className           a  String
 	 *
 	 */
-	public void setCoderClass ( String className ) {
+	public void setCoderClass(String className) {
 		coderClass = className;
 	}
-	
+
 	/**
 	 * returns the currently used coder class
 	 *
 	 * @return   a String
 	 *
 	 */
-	public String getCoder () {
+	public String getCoder() {
 		return coderClass;
 	}
-	
+
 	/**
 	 * returns if the client is currently connected
 	 *
 	 * @return   a boolean
 	 *
 	 */
-	public boolean isConnected () {
-		return isConnected( false );
+	public boolean isConnected() {
+		return isConnected(false);
 	}
-	
-	
+
 	/**
 	 * returns if the client is currently connected
 	 *
@@ -615,39 +598,38 @@ public class Client {
 	 * @return   a boolean
 	 *
 	 */
-	public boolean isConnected ( boolean tryTouch ) {
+	public boolean isConnected(boolean tryTouch) {
 		try {
-			if ( tryTouch )
+			if (tryTouch)
 				touchSession();
 		} catch (ConnectorClientException e) {
 			bConnected = false;
 			return false;
 		}
-		
+
 		return bConnected;
 	}
-	
+
 	/**
 	 * returns the id of the currently used session at the server
 	 *
 	 * @return   a String
 	 *
 	 */
-	public String getSessionId () {
+	public String getSessionId() {
 		return sSessionId;
 	}
-	
+
 	/**
 	 * returns the timeout in milliseconds of the currently open session.
 	 *
 	 * @return   a long
 	 *
 	 */
-	public long getTimeoutMs () {
+	public long getTimeoutMs() {
 		return lTimeOutMs;
 	}
-	
-	
+
 	/**
 	 * Invokes a service method at the server. If not connected a connections
 	 * attempt will be performed. The result of the call will be returned as an
@@ -670,92 +652,91 @@ public class Client {
 	 * @exception   ConnectorClientException
 	 *
 	 */
-	public Object invoke ( String service, String method, Object... params )
-		throws UnableToConnectException, AuthenticationFailedException, TimeoutException,
-				ServerErrorException, AccessDeniedException,
-				NotFoundException, ConnectorClientException
-	{
-		if ( ! bConnected )
+	public Object invoke(String service, String method, Object... params) throws UnableToConnectException,
+			AuthenticationFailedException, TimeoutException, ServerErrorException, AccessDeniedException,
+			NotFoundException, ConnectorClientException {
+		if (!bConnected)
 			connect();
 
 		try {
-			URL url = new URL ( (bUseHttps) ? "https" : "http" , sHost, iPort, "/"+ service + "/" + method + "?SESSION=" + sSessionId );
+			URL url = new URL((bUseHttps) ? "https" : "http", sHost, iPort, "/" + service + "/" + method + "?SESSION="
+					+ sSessionId);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestProperty( "Content-Type", "text/xml" );
+			connection.setRequestProperty("Content-Type", "text/xml");
 
-			if ( params != null && params.length > 0 ) {
-				String paramCode = getParameterCoding( params );
+			if (params != null && params.length > 0) {
+				String paramCode = getParameterCoding(params);
 
 				// ok, code the parameters into a post call
-				connection.setDoOutput( true );
-				
-				OutputStreamWriter osw = new OutputStreamWriter ( connection.getOutputStream() );
-				osw.write( paramCode );
-				
-				osw.flush ();
+				connection.setDoOutput(true);
+
+				OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+				osw.write(paramCode);
+
+				osw.flush();
 				osw.close();
 			}
-			
+
 			int responseCode = connection.getResponseCode();
-			
-			if ( responseCode == HttpURLConnection.HTTP_FORBIDDEN )
-				throw new AccessDeniedException() ;
-			
-			if ( responseCode == HttpURLConnection.HTTP_NOT_FOUND // method unavailable
-				|| responseCode == 503 )   // service unavailable
-				throw new NotFoundException ();
-			
-			if ( responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR ) {
+
+			if (responseCode == HttpURLConnection.HTTP_FORBIDDEN)
+				throw new AccessDeniedException();
+
+			if (responseCode == HttpURLConnection.HTTP_NOT_FOUND // method unavailable
+					|| responseCode == 503) // service unavailable
+				throw new NotFoundException();
+
+			if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
 				String mess = "Remote Exception during invocation";
 				try {
-					if ( "text/xml".equals ( connection.getContentType() ) ) {
+					if ("text/xml".equals(connection.getContentType())) {
 						// we have a object array response describing the exception
-						Object[] result = (Object[]) interpretInvocationResult( (InputStream) connection.getErrorStream() );
-						throw new ServerErrorException ( (Exception) result[3] );
+						Object[] result = (Object[]) interpretInvocationResult((InputStream) connection
+								.getErrorStream());
+						throw new ServerErrorException((Exception) result[3]);
 					} else
 						// simple text message (to stay compatible to older versions of the connector
-						mess = readHttpContent( (InputStream) connection.getErrorStream(), connection.getContentLength() );
-				} catch ( ServerErrorException e ) {
+						mess = readHttpContent((InputStream) connection.getErrorStream(), connection.getContentLength());
+				} catch (ServerErrorException e) {
 					throw e;
-				} catch ( Exception e ) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					mess += "Unable to create cause Exception: " + e;
 				}
-				
-				throw new ServerErrorException (mess);
+
+				throw new ServerErrorException(mess);
 			}
-			
-			if ( responseCode == HttpURLConnection.HTTP_PRECON_FAILED )
-				throw new TimeoutException ();
-			
-			if ( responseCode == HttpURLConnection.HTTP_NO_CONTENT )
+
+			if (responseCode == HttpURLConnection.HTTP_PRECON_FAILED)
+				throw new TimeoutException();
+
+			if (responseCode == HttpURLConnection.HTTP_NO_CONTENT)
 				return null;
-			
-			if ( responseCode == HttpURLConnection.HTTP_NOT_ACCEPTABLE )
-				throw new ConnectorClientException ( "The server could no read the invocation parameters!" );
-			
-			if ( responseCode == HttpURLConnection.HTTP_NOT_IMPLEMENTED ) {
+
+			if (responseCode == HttpURLConnection.HTTP_NOT_ACCEPTABLE)
+				throw new ConnectorClientException("The server could no read the invocation parameters!");
+
+			if (responseCode == HttpURLConnection.HTTP_NOT_IMPLEMENTED) {
 				//String mess = ""; //readHttpContent( (InputStream) connection.getContent(), connection.getContentLength() );
-				throw new ReturnTypeNotImplementedException ();
+				throw new ReturnTypeNotImplementedException();
 			}
-			
+
 			String type = connection.getContentType();
 			//int length = connection.getContentLength();
-			if ( ! "text/xml".equals ( type ) )
-				throw new ConnectorClientException ( "Problems to interpret the server's answer - content type not text/xml!");
+			if (!"text/xml".equals(type))
+				throw new ConnectorClientException(
+						"Problems to interpret the server's answer - content type not text/xml!");
 
-			Object result = interpretInvocationResult( (InputStream) connection.getContent() );
-			
+			Object result = interpretInvocationResult((InputStream) connection.getContent());
+
 			return result;
-		} catch ( IOException e ) {
+		} catch (IOException e) {
 			bConnected = false;
-			throw new UnableToConnectException ( "IOException with the connection!", e );
+			throw new UnableToConnectException("IOException with the connection!", e);
 		}
 
 	}
-	
-	
-	
+
 	/**
 	 * writes an encoding of the object parameter array to the outputStream
 	 *
@@ -766,69 +747,67 @@ public class Client {
 	 * @exception   IOException
 	 *
 	 */
-	public String getParameterCoding ( Object[] params )
-		throws ParameterTypeNotImplementedException, IOException, ConnectorClientException
-	{
+	public String getParameterCoding(Object[] params) throws ParameterTypeNotImplementedException, IOException,
+			ConnectorClientException {
 		try {
 			ParamCoder coder = null;
-			
-			StringWriter sw = new StringWriter ();
-			
+
+			StringWriter sw = new StringWriter();
+
 			try {
 				@SuppressWarnings("rawtypes")
-				Constructor constr = Class.forName ( coderClass ).getConstructor ( new Class[] { Writer.class } ) ;
-				coder = (ParamCoder) constr.newInstance( new Object[]{ sw } ) ;
+				Constructor constr = Class.forName(coderClass).getConstructor(new Class[] { Writer.class });
+				coder = (ParamCoder) constr.newInstance(new Object[] { sw });
 			} catch (Exception e) {
-				throw new ConnectorClientException ( "Unable to loadecoader!", e );
+				throw new ConnectorClientException("Unable to loadecoader!", e);
 			}
-			
-			coder.header( params.length );
-			
-			for ( int i=0; i<params.length; i++ ) {
-				coder.write ( params[i] );
+
+			coder.header(params.length);
+
+			for (int i = 0; i < params.length; i++) {
+				coder.write(params[i]);
 			}
-			
+
 			coder.footer();
-			
+
 			return sw.toString();
 		} catch (i5.las2peer.httpConnector.coder.ParameterTypeNotImplementedException e) {
-			throw new ParameterTypeNotImplementedException ( "One or more of the invocation parameters could not be coded for transfer!", e );
+			throw new ParameterTypeNotImplementedException(
+					"One or more of the invocation parameters could not be coded for transfer!", e);
 		}
 	}
-	
-	
+
 	/**
 	 * tries to touch the session at the server
 	 *
 	 * @exception   ConnectorClientException
 	 *
 	 */
-	public void touchSession () throws ConnectorClientException {
-		if ( ! bConnected )
+	public void touchSession() throws ConnectorClientException {
+		if (!bConnected)
 			return;
-		
+
 		try {
-			URL url = new URL ( bUseHttps ? "https": "http", sHost, iPort, "/touchsession?SESSION=" + sSessionId );
-			
+			URL url = new URL(bUseHttps ? "https" : "http", sHost, iPort, "/touchsession?SESSION=" + sSessionId);
+
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			//int length = conn.getContentLength();
-			
-			int response = conn.getResponseCode() ;
-			
-			if ( response == 401 ) { // 401 = UNAUTHORIZED
-				throw new ConnectorClientException ( "The Session I tried to access does not exist!!" );
-			} else if ( response != HttpURLConnection.HTTP_NO_CONTENT ) {
-				throw new ConnectorClientException ( "Unkown Answer!" );
+
+			int response = conn.getResponseCode();
+
+			if (response == 401) { // 401 = UNAUTHORIZED
+				throw new ConnectorClientException("The Session I tried to access does not exist!!");
+			} else if (response != HttpURLConnection.HTTP_NO_CONTENT) {
+				throw new ConnectorClientException("Unkown Answer!");
 			}
-			
+
 			// ok, touch was successfull
 		} catch (IOException e) {
 			bConnected = false;
-			throw new ConnectorClientException ( "I/O-Exception in the http connection!", e );
+			throw new ConnectorClientException("I/O-Exception in the http connection!", e);
 		}
 	}
-		
-	
+
 	/**
 	 * interprets the content of a open session request an sets the attributes of the connection
 	 *
@@ -837,37 +816,37 @@ public class Client {
 	 * @exception   InvalidServerAnswerException
 	 *
 	 */
-	private void interpretSessionContent ( String content ) throws InvalidServerAnswerException {
-		
-		String[] lines = content.split ( "\\s*\r?\n\\s*" );
-		
-		if ( ! lines[0].matches( "<\\?xml\\s+version=\"1.0\"\\s*\\?>" ) )
-			throw new InvalidServerAnswerException ( "answer is not xml conform ( lacking header )" );
-		
-		if ( lines[1].matches ( "<session persistent=\"true\">" ) )
+	private void interpretSessionContent(String content) throws InvalidServerAnswerException {
+
+		String[] lines = content.split("\\s*\r?\n\\s*");
+
+		if (!lines[0].matches("<\\?xml\\s+version=\"1.0\"\\s*\\?>"))
+			throw new InvalidServerAnswerException("answer is not xml conform ( lacking header )");
+
+		if (lines[1].matches("<session persistent=\"true\">"))
 			bIsPersistent = true;
-		else if ( ! lines[1].trim().matches( "<session>" ))
-			throw new InvalidServerAnswerException ( "answer has not the expected root node (<session>)" + lines [1] + "..." + content );
-					
-		Matcher m = Pattern.compile ( "<id>([^>]+)</id>").matcher ( lines[2] );
-		if ( m.matches () ) {
+		else if (!lines[1].trim().matches("<session>"))
+			throw new InvalidServerAnswerException("answer has not the expected root node (<session>)" + lines[1]
+					+ "..." + content);
+
+		Matcher m = Pattern.compile("<id>([^>]+)</id>").matcher(lines[2]);
+		if (m.matches()) {
 			sSessionId = m.group(1);
 		} else
-			throw new InvalidServerAnswerException ( "first element of session is not the id!" );
+			throw new InvalidServerAnswerException("first element of session is not the id!");
 
-		m = Pattern.compile ( "<timeout>([0-9]+)</timeout>").matcher ( lines[3] ) ;
-		if ( m.matches () ) {
-			lTimeOutMs = Long.valueOf( m.group(1)).longValue();
+		m = Pattern.compile("<timeout>([0-9]+)</timeout>").matcher(lines[3]);
+		if (m.matches()) {
+			lTimeOutMs = Long.valueOf(m.group(1)).longValue();
 		} else
-			throw new InvalidServerAnswerException ( "Second element of session is not the timeout!" );
-		
-		m = Pattern.compile ( "<outdate>([0-9]+)</outdate>").matcher ( lines[4] );
-		if ( m.matches () ) {
-			lOutdateS = Long.valueOf ( m.group(1)).longValue();
+			throw new InvalidServerAnswerException("Second element of session is not the timeout!");
+
+		m = Pattern.compile("<outdate>([0-9]+)</outdate>").matcher(lines[4]);
+		if (m.matches()) {
+			lOutdateS = Long.valueOf(m.group(1)).longValue();
 		}
 	}
-		
-	
+
 	/**
 	 * tries to interpret the content of the urlConnections (given as InputStream) either as a
 	 * single object or an array.
@@ -881,36 +860,31 @@ public class Client {
 	 * @exception   InvalidCodingException
 	 *
 	 */
-	private Object interpretInvocationResult ( InputStream content ) throws ConnectorClientException {
+	private Object interpretInvocationResult(InputStream content) throws ConnectorClientException {
 		ParamDecoder decoder = null;
 		try {
 			@SuppressWarnings("rawtypes")
-			Constructor constr = Class.forName( decoderClass).getConstructor ( new Class[] { InputStream.class } );
-			decoder = (ParamDecoder) constr.newInstance( new Object[] { content } );
+			Constructor constr = Class.forName(decoderClass).getConstructor(new Class[] { InputStream.class });
+			decoder = (ParamDecoder) constr.newInstance(new Object[] { content });
 		} catch (Exception e) {
-			throw new ConnectorClientException ( "Unable to instanciate decoder class " + decoderClass + "!" , e );
+			throw new ConnectorClientException("Unable to instanciate decoder class " + decoderClass + "!", e);
 		}
-		
+
 		Object result = null;
 		try {
 			int count = decoder.checkHeader();
-			if ( count != 1)
+			if (count != 1)
 				result = decoder.decodeArray();
 			else
 				result = decoder.decodeSingle();
 			decoder.checkFooter();
 		} catch (IOException e) {
-			throw new ConnectorClientException ( "Error with the connections input stream", e );
-		} catch ( InvalidCodingException e ) {
-			throw new ConnectorClientException ( "Response of the server is not interpretable as an Object!", e );
+			throw new ConnectorClientException("Error with the connections input stream", e);
+		} catch (InvalidCodingException e) {
+			throw new ConnectorClientException("Response of the server is not interpretable as an Object!", e);
 		}
-		
+
 		return result;
 	}
-	
-		
-	
-		
+
 }
-
-

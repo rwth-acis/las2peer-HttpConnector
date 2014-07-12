@@ -7,14 +7,10 @@ import java.io.Serializable;
  * The abstract ParamDecoder class defines all necessary methods to decode
  * parameters coded by a fitting {@link ParamCoder} class.
  *
- * @author Holger Jan&szlig;en
  */
 
+public abstract class ParamDecoder {
 
-public abstract class ParamDecoder
-{
-	
-		
 	/**
 	 * check the header of any message to decode
 	 *
@@ -24,8 +20,8 @@ public abstract class ParamDecoder
 	 * @exception   IOException
 	 *
 	 */
-	public abstract int checkHeader () throws InvalidCodingException, IOException;
-	
+	public abstract int checkHeader() throws InvalidCodingException, IOException;
+
 	/**
 	 * Method checking the rest of the message after decoding all of the parameters
 	 *
@@ -33,8 +29,8 @@ public abstract class ParamDecoder
 	 * @exception   IOException
 	 *
 	 */
-	public abstract void checkFooter () throws InvalidCodingException, IOException;
-	
+	public abstract void checkFooter() throws InvalidCodingException, IOException;
+
 	/**
 	 * decode a single parameter
 	 *
@@ -44,8 +40,8 @@ public abstract class ParamDecoder
 	 * @exception   IOException
 	 *
 	 */
-	public abstract Object decodeSingle () throws InvalidCodingException, IOException;
-	
+	public abstract Object decodeSingle() throws InvalidCodingException, IOException;
+
 	/**
 	 * decode an array of parameters
 	 *
@@ -55,9 +51,6 @@ public abstract class ParamDecoder
 	 * @exception   IOException
 	 *
 	 */
-	public abstract Serializable[] decodeArray () throws InvalidCodingException, IOException;
-	
-	
-	
-}
+	public abstract Serializable[] decodeArray() throws InvalidCodingException, IOException;
 
+}

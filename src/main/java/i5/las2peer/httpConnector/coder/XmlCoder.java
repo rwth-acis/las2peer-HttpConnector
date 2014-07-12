@@ -13,19 +13,14 @@ import org.apache.commons.codec.binary.Base64;
  * to code parameters of a message into an XML String delivered by the connector
  * (for client request and server answer).
  *
- * @author Holger Jan&szlig;en
  */
 
-
 public class XmlCoder extends ParamCoder {
-	
 
-	
-	
-	public XmlCoder ( Writer out ) throws IOException {
-		super ( out );
+	public XmlCoder(Writer out) throws IOException {
+		super(out);
 	}
-	
+
 	/**
 	 * Writes a coded byte to the outputstream
 	 *
@@ -35,9 +30,9 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(byte b) throws IOException {
-		out.write ( "\t<param type=\"byte\">" + b + "</param>\n" );
+		out.write("\t<param type=\"byte\">" + b + "</param>\n");
 	}
-	
+
 	/**
 	 * writes a coded short to the output stream
 	 *
@@ -46,10 +41,10 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	public void write(short s) throws IOException{
-		out.write ( "\t<param type=\"short\">" + s + "</param>\n" );
+	public void write(short s) throws IOException {
+		out.write("\t<param type=\"short\">" + s + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded int to the outputstream
 	 *
@@ -58,10 +53,10 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	public void write(int i) throws IOException{
-		out.write ( "\t<param type=\"int\">" + i + "</param>\n" );
+	public void write(int i) throws IOException {
+		out.write("\t<param type=\"int\">" + i + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded char to the outputstream
 	 *
@@ -70,10 +65,10 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	public void write(char c) throws IOException{
-		out.write ( "\t<param type=\"char\">" + c + "</param>\n" );
+	public void write(char c) throws IOException {
+		out.write("\t<param type=\"char\">" + c + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded boolean to the outputstream
 	 *
@@ -82,10 +77,10 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	public void write(boolean b) throws IOException{
-		out.write ( "\t<param type=\"boolean\">" + b + "</param>\n" );
+	public void write(boolean b) throws IOException {
+		out.write("\t<param type=\"boolean\">" + b + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded long to the outputstream
 	 *
@@ -95,9 +90,9 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(long b) throws IOException {
-		out.write ( "\t<param type=\"long\">" + b + "</param>\n" );
+		out.write("\t<param type=\"long\">" + b + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded double to the outputstream
 	 *
@@ -107,9 +102,9 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(double b) throws IOException {
-		out.write ( "\t<param type=\"double\">" + b + "</param>\n" );
+		out.write("\t<param type=\"double\">" + b + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded float to the outputstream
 	 *
@@ -119,9 +114,9 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(float f) throws IOException {
-		out.write ( "\t<param type=\"float\">" + f + "</param>\n" );
+		out.write("\t<param type=\"float\">" + f + "</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded String to the outputstream
 	 *
@@ -132,9 +127,9 @@ public class XmlCoder extends ParamCoder {
 	 */
 	public void write(String s) throws IOException {
 		//out.write ( "\t<param type=\"String\">" + s.replaceAll ( "<", "&lt;" ) + "</param>\n" );
-		out.write ( "\t<param type=\"String\"><![CDATA[" + s + "]]></param>\n" );
+		out.write("\t<param type=\"String\"><![CDATA[" + s + "]]></param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded byte array to the outputstream
 	 *
@@ -145,20 +140,17 @@ public class XmlCoder extends ParamCoder {
 	 */
 	public void write(byte[] bytes) throws IOException {
 		Base64 base64 = new Base64();
-		byte[] encoded = base64.encode ( bytes );
-		
-		String s = new String ( encoded );
-		
-		out.write ( "\t<param type=\"Array\" class=\"byte\" length=\""+s.length()+"\">\n\t\t" );
+		byte[] encoded = base64.encode(bytes);
 
-		out.write ( "<![CDATA[" + s + "]]>" );
-		
-		out.write ( "\n</param>\n" );
+		String s = new String(encoded);
+
+		out.write("\t<param type=\"Array\" class=\"byte\" length=\"" + s.length() + "\">\n\t\t");
+
+		out.write("<![CDATA[" + s + "]]>");
+
+		out.write("\n</param>\n");
 	}
-		
-	
-	
-	
+
 	/**
 	 * Writes a coded short array to the outputstream
 	 *
@@ -168,11 +160,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(short[] shorts) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"short\" length=\"" + shorts.length + "\">\n" );
-		writeArray ( shorts );
-		out.write ( "\t</param>\n" );
+		out.write("\t<param type=\"Array\" class=\"short\" length=\"" + shorts.length + "\">\n");
+		writeArray(shorts);
+		out.write("\t</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded integer array to the outputstream
 	 *
@@ -182,11 +174,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(int[] integers) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"integer\" length=\"" + integers.length + "\">\n" );
-		writeArray ( integers );
-		out.write ( "\t</param>\n" );
+		out.write("\t<param type=\"Array\" class=\"integer\" length=\"" + integers.length + "\">\n");
+		writeArray(integers);
+		out.write("\t</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded char array to the outputstream
 	 *
@@ -196,11 +188,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(char[] characters) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"char\" length=\"" + characters.length + "\">\n" );
-		writeArray ( characters );
-		out.write ( "\t</param>\n" );
+		out.write("\t<param type=\"Array\" class=\"char\" length=\"" + characters.length + "\">\n");
+		writeArray(characters);
+		out.write("\t</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded long array to the outputstream
 	 *
@@ -210,27 +202,26 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(long[] longs) throws IOException {
-		byte[] bytes = new byte[ longs.length * 8 ] ;
-		for ( int i=0; i<longs.length; i++ ) {
+		byte[] bytes = new byte[longs.length * 8];
+		for (int i = 0; i < longs.length; i++) {
 			byte[] longbytes = toBytes(longs[i]);
 			for (int j = 0; j < 8; j++) {
-				bytes [ i*8+j] = longbytes[j];
+				bytes[i * 8 + j] = longbytes[j];
 			}
 		}
 
-		
 		Base64 base64 = new Base64();
-		byte[] encoded = base64.encode ( bytes );
-		
-		String s = new String ( encoded );
-		
-		out.write ( "\t<param type=\"Array\" class=\"long\" length=\""+s.length()+"\">\n\t\t" );
-				
-		out.write ( "<![CDATA[" + s + "]]>" );
-		
-		out.write ( "\n</param>\n" );
+		byte[] encoded = base64.encode(bytes);
+
+		String s = new String(encoded);
+
+		out.write("\t<param type=\"Array\" class=\"long\" length=\"" + s.length() + "\">\n\t\t");
+
+		out.write("<![CDATA[" + s + "]]>");
+
+		out.write("\n</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded double array to the outputstream
 	 *
@@ -240,11 +231,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(double[] doubles) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"double\" length=\"" + doubles.length + "\">\n" );
-		writeArray ( doubles );
-		out.write ( "\t</param>\n" );
+		out.write("\t<param type=\"Array\" class=\"double\" length=\"" + doubles.length + "\">\n");
+		writeArray(doubles);
+		out.write("\t</param>\n");
 	}
-	
+
 	/**
 	 * Writes a coded float array to the outputstream
 	 *
@@ -254,12 +245,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(float[] floats) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"float\" length=\"" + floats.length + "\">\n" );
-		writeArray ( floats );
-		out.write ( "\t</param>\n" );
+		out.write("\t<param type=\"Array\" class=\"float\" length=\"" + floats.length + "\">\n");
+		writeArray(floats);
+		out.write("\t</param>\n");
 	}
-	
-	
+
 	/**
 	 * Writes a coded String array to the outputstream
 	 *
@@ -269,15 +259,15 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void write(String[] strings) throws IOException {
-		out.write ( "\t<param type=\"Array\" class=\"String\" length=\"" + strings.length + "\">\n" );
-		
-		for ( int i=0; i<strings.length; i++ ) {
-			out.write ( "\t\t<element><![CDATA[" + strings[i] + "]]></element>\n" );
+		out.write("\t<param type=\"Array\" class=\"String\" length=\"" + strings.length + "\">\n");
+
+		for (int i = 0; i < strings.length; i++) {
+			out.write("\t\t<element><![CDATA[" + strings[i] + "]]></element>\n");
 		}
-		
-		out.write ( "\t</param>\n" );
+
+		out.write("\t</param>\n");
 	}
-		
+
 	/**
 	 * Writes a coded Serializable object stream as byte array to the outputstream
 	 *
@@ -288,24 +278,25 @@ public class XmlCoder extends ParamCoder {
 	 */
 	public void writeSerializable(Serializable o) throws IOException {
 		// transform serializable into byte array
-		ByteArrayOutputStream baos = new ByteArrayOutputStream ();
-		ObjectOutputStream oos = new ObjectOutputStream ( baos ) ;
-		oos.writeObject ( o );
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(baos);
+		oos.writeObject(o);
 		oos.close();
-		
+
 		byte[] abBytes = baos.toByteArray();
-		
+
 		// encode byte array to base64
 		Base64 base64 = new Base64();
-		byte[] encoded = base64.encode ( abBytes );
-		String s = new String ( encoded );
-		
+		byte[] encoded = base64.encode(abBytes);
+		String s = new String(encoded);
+
 		// and write to output as tag with CDATA content
-		out.write ( "\t<param type=\"Serializable\" class=\"" + o.getClass().getName() + "\" length=\""+s.length()+"\">" );
-		out.write ( "<![CDATA[" + s + "]]>" );
-		out.write ( "</param>\n" );
+		out.write("\t<param type=\"Serializable\" class=\"" + o.getClass().getName() + "\" length=\"" + s.length()
+				+ "\">");
+		out.write("<![CDATA[" + s + "]]>");
+		out.write("</param>\n");
 	}
-	
+
 	/**
 	 * Writes a null value as coded parameter to the output stream
 	 *
@@ -313,10 +304,9 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void writeNull() throws IOException {
-		out.write ( "\t<param type=\"NULL\"></param>\n" );
+		out.write("\t<param type=\"NULL\"></param>\n");
 	}
-	
-	
+
 	/**
 	 * Writes a coded array of a java wrapper class (Integer, Byte, Long etc.)
 	 * ot the outputstram
@@ -328,24 +318,23 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void writeWrapperArray(Object o) throws IOException, ParameterTypeNotImplementedException {
-		out.write ( "\t<param type=\"Array\" class=\"" );
+		out.write("\t<param type=\"Array\" class=\"");
 		// remove java.lang. from classname
-		
-		out.write(o.getClass().getCanonicalName().replaceAll("java.lang.","").replaceAll("\\[\\]",""));
-		
-		out.write ( "\" length=\"" );
-		out.write ( "" + java.lang.reflect.Array.getLength( o ) );
-		out.write ( "\" >\n" );
-		
-		for ( int i=0; i< java.lang.reflect.Array.getLength( o ); i++ ) {
+
+		out.write(o.getClass().getCanonicalName().replaceAll("java.lang.", "").replaceAll("\\[\\]", ""));
+
+		out.write("\" length=\"");
+		out.write("" + java.lang.reflect.Array.getLength(o));
+		out.write("\" >\n");
+
+		for (int i = 0; i < java.lang.reflect.Array.getLength(o); i++) {
 			out.write("\t\t<element>");
-			out.write ( java.lang.reflect.Array.get ( o, i ).toString() ) ;
-			out.write ( "</element>\n" );
+			out.write(java.lang.reflect.Array.get(o, i).toString());
+			out.write("</element>\n");
 		}
-		out.write ( "\t</param>\n" );
+		out.write("\t</param>\n");
 	}
-	
-	
+
 	/**
 	 * Method called by the using class to start the encoding
 	 *
@@ -354,11 +343,11 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	public void header ( int count ) throws IOException {
-		out.write ( "<?xml version=\"1.0\"?>\n" );
-		out.write ( "<objectlist count=\"" + count + "\">\n" );
+	public void header(int count) throws IOException {
+		out.write("<?xml version=\"1.0\"?>\n");
+		out.write("<objectlist count=\"" + count + "\">\n");
 	}
-	
+
 	/**
 	 * Method called by the using class to finish the coding
 	 *
@@ -366,12 +355,11 @@ public class XmlCoder extends ParamCoder {
 	 *
 	 */
 	public void footer() throws IOException {
-		out.write ( "</objectlist>\n" );
-		
+		out.write("</objectlist>\n");
+
 		out.flush();
 	}
-	
-	
+
 	/**
 	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings
 	 * from a given array
@@ -383,10 +371,10 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	private void writeArray ( Object arr ) throws IOException {
-		writeArray ( arr, 2 );
+	private void writeArray(Object arr) throws IOException {
+		writeArray(arr, 2);
 	}
-	
+
 	/**
 	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings
 	 * from a given array
@@ -397,19 +385,19 @@ public class XmlCoder extends ParamCoder {
 	 * @exception   IOException
 	 *
 	 */
-	private void writeArray (Object arr, int depth) throws IOException {
+	private void writeArray(Object arr, int depth) throws IOException {
 		String tabs = "";
-		for ( int i=0; i< depth; i++ )
+		for (int i = 0; i < depth; i++)
 			tabs += "\t";
-		
-		for ( int i=0; i<java.lang.reflect.Array.getLength( arr ); i++ ) {
-			out.write( tabs );
-			out.write( "<element>");
-			out.write ( java.lang.reflect.Array.get ( arr, i ).toString() );
-			out.write( "</element>\n");
+
+		for (int i = 0; i < java.lang.reflect.Array.getLength(arr); i++) {
+			out.write(tabs);
+			out.write("<element>");
+			out.write(java.lang.reflect.Array.get(arr, i).toString());
+			out.write("</element>\n");
 		}
 	}
-	
+
 	static byte[] toBytes(long n) {
 		byte[] b = new byte[8];
 		for (int i = 0; i < b.length; i++) {
@@ -419,5 +407,3 @@ public class XmlCoder extends ParamCoder {
 		return b;
 	}
 }
-
-
