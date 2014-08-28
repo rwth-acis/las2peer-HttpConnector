@@ -1,4 +1,10 @@
-<project name="LAS2peer-HTTP-Connector" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="las2peer-http-connector" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	<property name="ivy.organisation" value="i5" />
+	<property name="ivy.module" value="las2peer-http-connector" />
+	<property name="ivy.revision" value="0.1" />
+	<property name="ivy.deliver.revision" value="${ivy.revision}" />
+	<property name="ivy.pom.version" value="${ivy.revision}" />
 	
 	<presetdef name="javac">
 		<javac includeantruntime="false" />
@@ -54,11 +60,54 @@
 
     <target name="get_deps" depends="install-ivy" description="--> resolve dependencies">
         <ivy:settings>
-            <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
+            <credentials host="role.dbis.rwth-aachen.de:9911/archiva" realm="Repository internal"/>
         </ivy:settings>
         <ivy:retrieve type="jar"/>
     </target>
 	
+	<target name="deploy-snapshot" depends="jar">
+		
+		<property name="sn" value="${ivy.deliver.revision}-SNAPSHOT" />
+		<local name="ivy.deliver.revision"/>
+		<property name="ivy.deliver.revision" value="${sn}" />
+		<local name="ivy.pom.version"/>
+		<property name="ivy.pom.version" value="${sn}" />
+		
+		<ivy:makepom 
+			ivyfile="${ivy.dep.file}" 
+			pomfile="${export}/jars/${ivy.module}.pom" 
+			artifactName="${ivy.module}"
+			artifactPackaging="jar"
+		/>
+		
+		<ivy:publish resolver="acis-snapshots"
+			publishivy="false"
+			overwrite="true"
+			forcedeliver="true"
+			status="integration">
+			<artifacts pattern="${export}/jars/${ivy.module}.[ext]" />
+		</ivy:publish>
+		
+	</target>
+	
+	<target name="deploy-release" depends="jar, junit">
+		
+		<ivy:makepom
+			ivyfile="${ivy.dep.file}" 
+			pomfile="${export}/jars/${ivy.module}.pom" 
+			artifactName="${ivy.module}"
+			artifactPackaging="jar"
+		/>
+		
+		<ivy:publish resolver="acis-internal"
+			publishivy="false"
+			overwrite="true"
+			forcedeliver="true"
+			status="release">
+			<artifacts pattern="${export}/jars/${ivy.module}.[ext]" />
+		</ivy:publish>
+		
+	</target>
 	
 	<!-- Initialization -->
 	
@@ -80,7 +129,6 @@
 	<target name="init_doc" depends="init_general">
 		<mkdir dir="${export.doc}" />
 	</target>
-	
 	
 	<!-- Compilation -->
 	
@@ -120,7 +168,7 @@
 	<target name="compile_all" depends="compile_main, compile_junit" />	
 	
 	<target name="jar" depends="compile_all">
-		<jar jarfile="${export.jars}/LAS2peer-HTTP-Connector.jar">
+		<jar jarfile="${export.jars}/las2peer-http-connector.jar">
 			<fileset dir="${tmp.classes}">
 			</fileset>
 			<manifest>
