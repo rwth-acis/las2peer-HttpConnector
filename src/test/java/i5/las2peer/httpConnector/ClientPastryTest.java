@@ -33,7 +33,7 @@ public class ClientPastryTest {
 	@Before
 	public void setup () throws Exception {
 		// start a launcher
-		node = new PastryNodeImpl(9001, "NEW");
+		node = new PastryNodeImpl(9001, null);
 		node.setLogfilePrefix("log/l2p-node_");
 		node.launch();
 		
