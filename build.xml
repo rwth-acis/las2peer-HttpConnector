@@ -237,7 +237,6 @@
 	</target>
 	
 	<target name="clean_deps">
-		<delete dir="ivy" />
         <delete dir="${lib}" />
 	</target>
 	
