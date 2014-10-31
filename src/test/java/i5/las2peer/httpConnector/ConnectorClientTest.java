@@ -75,6 +75,7 @@ public class ConnectorClientTest
 		connector = new HttpConnector();
 		connector.setSocketTimeout(10000);
 		connector.setLogStream(new PrintStream ( logStream));
+		connector.setPort(HTTP_PORT);
 		connector.start ( node );
 
 		// eve is the anonymous agent!
