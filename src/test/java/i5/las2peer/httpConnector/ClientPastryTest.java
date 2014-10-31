@@ -44,7 +44,7 @@ public class ClientPastryTest {
 		
 		
 		final HttpConnector connector = new HttpConnector ();
-		connector.setPort( 8080 );
+		connector.setPort( 38080 );
 		connector.start( node );
 		
 		String passPhrase = SimpleTools.createRandomString(20);
@@ -67,7 +67,7 @@ public class ClientPastryTest {
 		
 		System.out.println ("adam: " + adam.getId());
 		
-		Client c = new Client ( "localhost", 8080, "" + adam.getId(), "adamspass");
+		Client c = new Client ( "localhost", 38080, "" + adam.getId(), "adamspass");
 		c.setSessionTimeout ( 1000 );
 		c.connect();
 		
@@ -83,7 +83,7 @@ public class ClientPastryTest {
 		UserAgent eve = MockAgentFactory.getEve();
 		System.out.println ("eve: " + eve.getId());
 		
-		Client c2 = new Client ( "localhost", 8080, "" + eve.getId(), "evespass");
+		Client c2 = new Client ( "localhost", 38080, "" + eve.getId(), "evespass");
 		c.setSessionOutdate(3000);
 		c.connect();
 		

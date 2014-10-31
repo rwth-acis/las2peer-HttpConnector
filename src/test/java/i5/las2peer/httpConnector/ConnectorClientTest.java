@@ -42,7 +42,7 @@ import org.junit.Test;
 public class ConnectorClientTest 
 {
 	private static final String HTTP_ADDRESS = "localhost";
-	private static final int HTTP_PORT = 8080;
+	private static final int HTTP_PORT = 38080;
 
 	private LocalNode node;
 	private HttpConnector connector;
