@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A HttpServer RequestHandler for handling requests to the LAS2peer HTTP connector. Each request will be distributed to
@@ -62,6 +63,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	private Hashtable<String, HttpSession> htSessions = null;
 
 	private static final String SESSSION_GET_VAR = "SESSION";
+
+	private static final ConcurrentHashMap<Long, Integer> activeRequests = new ConcurrentHashMap<>();
 
 	private HttpConnector connector = null;
 	private Node l2pNode;
@@ -99,6 +102,7 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 * @exception Exception
 	 * 
 	 */
+	@Override
 	public void processRequest(HttpRequest request, HttpResponse response) throws Exception {
 		response.setHeaderField("Server-Name", "LAS2peer");
 		response.setHeaderField("Access-Control-Allow-Origin", connector.crossOriginResourceDomain);
@@ -258,12 +262,19 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 
 		session.checkRemoteAccess(request);
 
-		try {
-			l2pNode.unregisterAgent(session.getAgentId());
-		} catch (AgentNotKnownException e) {
-			sendInternalErrorResponse(response,
-					"I have a session, but the corresponding user is not logged in to the las2peer net?!?!",
-					"strange problem: session exists, but agent not loaded at p2p node?!?!");
+		// only unregister the agent when it is not used for other requests
+		Integer requests = activeRequests.get(session.getAgentId());
+		if (requests == null || requests == 0) {
+			try {
+				l2pNode.unregisterAgent(session.getAgentId());
+			} catch (AgentNotKnownException e) {
+				sendInternalErrorResponse(response,
+						"I have a session, but the corresponding user is not logged in to the las2peer net?!?!",
+						"strange problem: session exists, but agent not loaded at p2p node?!?!");
+			}
+		} else {
+			requests--;
+			activeRequests.put(session.getAgentId(), requests);
 		}
 
 		session.endSession();
@@ -614,6 +625,14 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			long persistentTimeout = connector.getDefaultPersistentTimeout();
 			if (outDate != null)
 				persistentTimeout = connector.getPersistentSessionTimeout(Long.valueOf(outDate));
+
+			Integer requests = activeRequests.get(userAgent.getId());
+			if (requests == null) {
+				requests = 0;
+			} else {
+				requests++;
+			}
+			activeRequests.put(userAgent.getId(), requests);
 
 			Mediator mediator = l2pNode.getOrRegisterLocalMediator(userAgent);
 
