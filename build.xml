@@ -172,10 +172,7 @@
 			<fileset dir="${tmp.classes}">
 			</fileset>
 			<manifest>
-				<attribute
-					name="Class-Path"
-					value="i5-httpServer-0.4.jar"
-				/>
+				<attribute name="Class-Path" value="i5-httpServer-0.4.jar"/>
 			</manifest>
 		</jar>
 	</target>
