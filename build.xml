@@ -2,7 +2,7 @@
 	
 	<property name="ivy.organisation" value="i5" />
 	<property name="ivy.module" value="las2peer-http-connector" />
-	<property name="ivy.revision" value="0.1" />
+	<property name="ivy.revision" value="0.3" />
 	<property name="ivy.deliver.revision" value="${ivy.revision}" />
 	<property name="ivy.pom.version" value="${ivy.revision}" />
 	
@@ -11,7 +11,7 @@
 	</presetdef>
 	
     <property name="ivy.install.version" value="2.3.0" />
-    <property name="ivy.jar.dir" value="${basedir}/ivy" />
+    <property name="ivy.jar.dir" value="${basedir}/etc/ivy" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
     <property name="ivy.settings.file" value="${ivy.jar.dir}/ivysettings.xml" />
     <property name="ivy.dep.file" value="${ivy.jar.dir}/ivy.xml" />
@@ -136,8 +136,6 @@
 		<javac srcdir="${src.main}"
             destdir="${tmp.classes}"
             classpathref="libraries"
-            source="1.7"
-            target="1.7"
             debug="on"
             encoding="UTF-8"
 		/>
@@ -153,8 +151,6 @@
             destdir="${tmp.junit}"
             classpath="${tmp.classes}:${lib.junit}"
             classpathref="libraries"
-            source="1.7"
-            target="1.7"
             debug="on"
             encoding="UTF-8"
 		/>
