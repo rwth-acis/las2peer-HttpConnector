@@ -8,5 +8,5 @@
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/las2peer-0.3-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.7.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="output" path="output"/>
 </classpath>
