@@ -1,9 +1,23 @@
 package i5.las2peer.httpConnector;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Constructor;
+import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
+
 import i5.httpServer.HttpRequest;
 import i5.httpServer.HttpResponse;
 import i5.httpServer.RequestHandler;
 import i5.las2peer.api.ConnectorException;
+import i5.las2peer.execution.L2pServiceException;
 import i5.las2peer.execution.NoSuchServiceException;
 import i5.las2peer.execution.NoSuchServiceMethodException;
 import i5.las2peer.execution.ServiceInvocationException;
@@ -20,19 +34,6 @@ import i5.las2peer.security.Agent;
 import i5.las2peer.security.L2pSecurityException;
 import i5.las2peer.security.Mediator;
 import i5.las2peer.security.PassphraseAgent;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.util.Hashtable;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A HttpServer RequestHandler for handling requests to the LAS2peer HTTP connector. Each request will be distributed to
@@ -364,13 +365,13 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		try {
 			try {
 				Serializable result;
-				if (request.getContentLength() > 0)
+				if (request.getContentLength() > 0) {
 					result = sess.getMediator().invoke(sRequest[1], sRequest[2], decodeInvocationParameters(request),
 							connector.preferLocalServices());
-				else
+				} else {
 					result = sess.getMediator().invoke(sRequest[1], sRequest[2], new Serializable[0],
 							connector.preferLocalServices());
-
+				}
 				sendInvocationSuccess(result, response);
 			} catch (UnlockNeededException e) {
 				// k, unlocking of the agent's secret key at the target node is needed!
@@ -378,24 +379,24 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 					l2pNode.sendUnlockRequest(sess.getAgentId(), sess.getStoredPass(), e.getRemoteNode(),
 							e.getNodeKey());
 					invokeRequest(request, response, false);
-				} else
+				} else {
 					sendSecurityProblems(request, response, sid, new L2pSecurityException(
 							"Mediation seems to have failed", e));
+				}
 			}
-		} catch (NoSuchServiceException e) {
-			sendNoSuchService(request, response, sRequest);
-		} catch (TimeoutException e) {
+		} catch (NoSuchServiceException | TimeoutException | AgentNotKnownException e) {
 			sendNoSuchService(request, response, sRequest);
 		} catch (NoSuchServiceMethodException e) {
 			sendNoSuchMethod(request, response, sid);
 		} catch (L2pSecurityException e) {
 			sendSecurityProblems(request, response, sid, e);
 		} catch (ServiceInvocationException e) {
-			if (e.getCause() == null)
+			if (e.getCause() == null) {
 				sendResultInterpretationProblems(request, response, sid);
-			else
+			} else {
 				sendInvocationException(request, response, sid, e);
-		} catch (InterruptedException e) {
+			}
+		} catch (InterruptedException | L2pServiceException e) { // actually NotFinishedException is catched here
 			sendInvocationInterrupted(request, response);
 		} catch (InvalidCodingException e) {
 			sendConnectorProblems(request, response, sid, e);
@@ -447,7 +448,7 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 * @param e
 	 */
 	private void sendInvocationException(HttpRequest request, HttpResponse response, String sid,
-			ServiceInvocationException e) {
+			L2pServiceException e) {
 		// internal exception in service method
 		response.clearContent();
 		response.setStatus(HttpResponse.STATUS_INTERNAL_SERVER_ERROR);
