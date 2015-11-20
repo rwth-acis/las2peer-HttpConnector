@@ -2,6 +2,13 @@ package i5.las2peer.httpConnector;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import i5.las2peer.httpConnector.client.AccessDeniedException;
 import i5.las2peer.httpConnector.client.AuthenticationFailedException;
 import i5.las2peer.httpConnector.client.Client;
@@ -17,12 +24,6 @@ import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
 import i5.las2peer.tools.SimpleTools;
 
-import java.io.IOException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 public class ClientPastryTest {
 
 	public static final String testServiceClass = "i5.las2peer.testing.TestService"; 
@@ -34,7 +35,6 @@ public class ClientPastryTest {
 	public void setup () throws Exception {
 		// start a launcher
 		node = new PastryNodeImpl(9001, null);
-		node.setLogfilePrefix("log/l2p-node_");
 		node.launch();
 		
 		UserAgent agent = MockAgentFactory.getEve(); agent.unlockPrivateKey("evespass");
