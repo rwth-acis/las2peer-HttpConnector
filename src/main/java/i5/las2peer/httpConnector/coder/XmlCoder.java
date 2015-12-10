@@ -363,7 +363,7 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings
 	 * from a given array
-	 * <br />
+	 * <p>
 	 * per Default, each line will be started with two tab (\t) characters.
 	 *
 	 * @param    arr                 an array of some kind
