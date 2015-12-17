@@ -284,7 +284,6 @@ public class XmlDecoder extends ParamDecoder {
 	 */
 	private Serializable decodeParamArray(String className, int count) throws InvalidCodingException, IOException {
 		Serializable result = null;
-		;
 
 		if (className.equals("String")) {
 			result = decodeStringArray(count);
