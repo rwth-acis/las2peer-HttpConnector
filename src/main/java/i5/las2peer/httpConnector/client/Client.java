@@ -741,8 +741,8 @@ public class Client {
 	 * @param params an Object[]
 	 *
 	 * @exception ParameterTypeNotImplementedException
-	 * @exception UnableToLoadCoderException
 	 * @exception IOException
+	 * @exception ConnectorClientException
 	 *
 	 */
 	public String getParameterCoding(Object[] params)
