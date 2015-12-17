@@ -12,8 +12,6 @@ import org.junit.Test;
 /**
  * SerializableTest.java
  *
- * @author Holger Jan&szlig;en
- * 
  */
 public class SerializableTest {
 

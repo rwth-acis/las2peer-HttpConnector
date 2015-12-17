@@ -6,7 +6,6 @@ import java.io.Serializable;
 /**
  * SomeClass.java
  *
- * @author Holger Jan&szlig;en
  */
 public class SomeClass implements Serializable {
 

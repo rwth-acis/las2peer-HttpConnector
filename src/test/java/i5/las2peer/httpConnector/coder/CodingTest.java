@@ -13,8 +13,6 @@ import org.junit.Test;
 /**
  * CodingTest.java
  *
- * @author Holger Jan&szlig;en
- * 
  */
 public class CodingTest {
 

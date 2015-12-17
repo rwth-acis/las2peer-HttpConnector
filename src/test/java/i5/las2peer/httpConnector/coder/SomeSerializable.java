@@ -21,8 +21,6 @@ import java.io.Serializable;
  * Feel free to comment out the constructor of SomeClass or the writeObject and readObject methods of this class to
  * observe the described behaviour while running the {@link SerializableTest} TestCase.
  *
- *
- * @author Holger Jan&szlig;en
  */
 public class SomeSerializable extends SomeClass implements Serializable {
 

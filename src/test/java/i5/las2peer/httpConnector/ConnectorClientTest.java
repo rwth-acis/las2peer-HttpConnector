@@ -36,8 +36,6 @@ import i5.las2peer.testing.MockAgentFactory;
 /**
  * Test for the HTTP connector client (using HTTP).
  *
- * @author Holger Jan&szlig;en
- * 
  */
 public class ConnectorClientTest {
 	private static final String HTTP_ADDRESS = "localhost";

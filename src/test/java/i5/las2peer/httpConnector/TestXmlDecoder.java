@@ -13,7 +13,6 @@ import i5.las2peer.httpConnector.coder.XmlDecoder;
 /**
  * Simple tests for the XML decoder
  *
- * @author Holger Jan&szlig;en
  */
 public class TestXmlDecoder {
 
