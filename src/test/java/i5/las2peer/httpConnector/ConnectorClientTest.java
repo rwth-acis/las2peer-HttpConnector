@@ -64,7 +64,7 @@ public class ConnectorClientTest
 		node.storeAgent( MockAgentFactory.getGroup1());
 		node.launch();
 		
-		ServiceAgent testService = ServiceAgent.generateNewAgent(testServiceClass, "a pass");
+		ServiceAgent testService = ServiceAgent.createServiceAgent(testServiceClass, "a pass");
 		testService.unlockPrivateKey("a pass");
 		
 		node.registerReceiver(testService);

@@ -49,7 +49,7 @@ public class ClientPastryTest {
 		
 		String passPhrase = SimpleTools.createRandomString(20);
 		
-		ServiceAgent myAgent = ServiceAgent.generateNewAgent(testServiceClass, passPhrase);
+		ServiceAgent myAgent = ServiceAgent.createServiceAgent(testServiceClass, passPhrase);
 		myAgent.unlockPrivateKey(passPhrase);
 		
 		node.registerReceiver(myAgent);		
