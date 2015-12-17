@@ -1,5 +1,12 @@
 package i5.las2peer.httpConnector;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.util.Date;
+
 import i5.httpServer.HttpServer;
 import i5.httpServer.HttpsServer;
 import i5.httpServer.RequestHandler;
@@ -10,18 +17,10 @@ import i5.las2peer.p2p.AgentNotKnownException;
 import i5.las2peer.p2p.Node;
 import i5.las2peer.security.Agent;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.text.DateFormat;
-import java.util.Date;
-
 /**
  * Starter class for registering the HTTP connector at the LAS2peer server.
  *
  */
-
 public class HttpConnector extends Connector {
 
 	/* configuration parameters */
@@ -149,8 +148,7 @@ public class HttpConnector extends Connector {
 	}
 
 	/**
-	 * set the socket timeout for the underlying http server
-	 * (only at configuration not during runtim)
+	 * set the socket timeout for the underlying http server (only at configuration not during runtim)
 	 * 
 	 * @param timeoutInMs
 	 */
@@ -260,8 +258,7 @@ public class HttpConnector extends Connector {
 	}
 
 	/**
-	 * send an interrupt to all sub servers
-	 * (mainly for hard test shutdown)
+	 * send an interrupt to all sub servers (mainly for hard test shutdown)
 	 */
 	public void interrupt() {
 		if (http != null)
@@ -274,18 +271,18 @@ public class HttpConnector extends Connector {
 	/**
 	 * get the node, this connector is running at / for
 	 * 
-	 * @return	the Las2Peer node of this connector
+	 * @return the Las2Peer node of this connector
 	 */
 	public Node getL2pNode() {
 		return myNode;
 	}
 
 	/**
-	 * get a timeout value for a suggested timeout (e.g. given by the remote user)
-	 * based on the set minimal an maximal timeout values
+	 * get a timeout value for a suggested timeout (e.g. given by the remote user) based on the set minimal an maximal
+	 * timeout values
 	 * 
 	 * e.g. a getSessionTimeout(0) always gives the minimal session timeout value
-	 *   	
+	 * 
 	 * @param suggested
 	 * @return the session time out
 	 */
@@ -380,7 +377,7 @@ public class HttpConnector extends Connector {
 			}
 			myNode.observerNotice(Event.HTTP_CONNECTOR_REQUEST, myNode.getNodeId(), service, request);
 		}
-		//Not a service call
+		// Not a service call
 		else {
 			myNode.observerNotice(Event.HTTP_CONNECTOR_REQUEST, myNode.getNodeId(), request);
 		}
@@ -398,7 +395,7 @@ public class HttpConnector extends Connector {
 
 	/**
 	 * 
-	 * @return true, if local running versions of services are preferred before broadcasting 
+	 * @return true, if local running versions of services are preferred before broadcasting
 	 */
 	boolean preferLocalServices() {
 		return preferLocalServices;

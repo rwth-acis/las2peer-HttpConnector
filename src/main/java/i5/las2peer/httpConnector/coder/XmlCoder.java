@@ -9,12 +9,10 @@ import java.io.Writer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * The XmlCoder class implements all abstract methods of the {@link ParamCoder}
- * to code parameters of a message into an XML String delivered by the connector
- * (for client request and server answer).
+ * The XmlCoder class implements all abstract methods of the {@link ParamCoder} to code parameters of a message into an
+ * XML String delivered by the connector (for client request and server answer).
  *
  */
-
 public class XmlCoder extends ParamCoder {
 
 	public XmlCoder(Writer out) throws IOException {
@@ -24,9 +22,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded byte to the outputstream
 	 *
-	 * @param    b                   a  byte
+	 * @param b a byte
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(byte b) throws IOException {
@@ -36,9 +34,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * writes a coded short to the output stream
 	 *
-	 * @param    s                   a  short
+	 * @param s a short
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(short s) throws IOException {
@@ -48,9 +46,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded int to the outputstream
 	 *
-	 * @param    i                   an int
+	 * @param i an int
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(int i) throws IOException {
@@ -60,9 +58,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded char to the outputstream
 	 *
-	 * @param    c                   a  char
+	 * @param c a char
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(char c) throws IOException {
@@ -72,9 +70,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded boolean to the outputstream
 	 *
-	 * @param    b                   a  boolean
+	 * @param b a boolean
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(boolean b) throws IOException {
@@ -84,9 +82,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded long to the outputstream
 	 *
-	 * @param    b                   a  long
+	 * @param b a long
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(long b) throws IOException {
@@ -96,9 +94,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded double to the outputstream
 	 *
-	 * @param    b                   a  double
+	 * @param b a double
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(double b) throws IOException {
@@ -108,9 +106,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded float to the outputstream
 	 *
-	 * @param    f                   a  float
+	 * @param f a float
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(float f) throws IOException {
@@ -120,22 +118,22 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded String to the outputstream
 	 *
-	 * @param    s                   a  String
+	 * @param s a String
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(String s) throws IOException {
-		//out.write ( "\t<param type=\"String\">" + s.replaceAll ( "<", "&lt;" ) + "</param>\n" );
+		// out.write ( "\t<param type=\"String\">" + s.replaceAll ( "<", "&lt;" ) + "</param>\n" );
 		out.write("\t<param type=\"String\"><![CDATA[" + s + "]]></param>\n");
 	}
 
 	/**
 	 * Writes a coded byte array to the outputstream
 	 *
-	 * @param    bytes               a  byte[]
+	 * @param bytes a byte[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(byte[] bytes) throws IOException {
@@ -154,9 +152,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded short array to the outputstream
 	 *
-	 * @param    shorts               a  short[]
+	 * @param shorts a short[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(short[] shorts) throws IOException {
@@ -168,9 +166,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded integer array to the outputstream
 	 *
-	 * @param    integers            an int[]
+	 * @param integers an int[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(int[] integers) throws IOException {
@@ -182,9 +180,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded char array to the outputstream
 	 *
-	 * @param    characters          a  char[]
+	 * @param characters a char[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(char[] characters) throws IOException {
@@ -196,9 +194,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded long array to the outputstream
 	 *
-	 * @param    longs               a  long[]
+	 * @param longs a long[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(long[] longs) throws IOException {
@@ -225,9 +223,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded double array to the outputstream
 	 *
-	 * @param    doubles             a  double[]
+	 * @param doubles a double[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(double[] doubles) throws IOException {
@@ -239,9 +237,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded float array to the outputstream
 	 *
-	 * @param    floats              a  float[]
+	 * @param floats a float[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(float[] floats) throws IOException {
@@ -253,9 +251,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded String array to the outputstream
 	 *
-	 * @param    strings              a  String[]
+	 * @param strings a String[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void write(String[] strings) throws IOException {
@@ -271,9 +269,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a coded Serializable object stream as byte array to the outputstream
 	 *
-	 * @param    o                   a  Serializable
+	 * @param o a Serializable
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void writeSerializable(Serializable o) throws IOException {
@@ -300,7 +298,7 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Writes a null value as coded parameter to the output stream
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void writeNull() throws IOException {
@@ -308,13 +306,12 @@ public class XmlCoder extends ParamCoder {
 	}
 
 	/**
-	 * Writes a coded array of a java wrapper class (Integer, Byte, Long etc.)
-	 * ot the outputstram
+	 * Writes a coded array of a java wrapper class (Integer, Byte, Long etc.) ot the outputstram
 	 *
-	 * @param    o                   an Object
+	 * @param o an Object
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException
 	 *
 	 */
 	public void writeWrapperArray(Object o) throws IOException, ParameterTypeNotImplementedException {
@@ -338,9 +335,9 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Method called by the using class to start the encoding
 	 *
-	 * @param    count               number of the parameters to code
+	 * @param count number of the parameters to code
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void header(int count) throws IOException {
@@ -351,7 +348,7 @@ public class XmlCoder extends ParamCoder {
 	/**
 	 * Method called by the using class to finish the coding
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public void footer() throws IOException {
@@ -361,14 +358,13 @@ public class XmlCoder extends ParamCoder {
 	}
 
 	/**
-	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings
-	 * from a given array
+	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings from a given array
 	 * <p>
 	 * per Default, each line will be started with two tab (\t) characters.
 	 *
-	 * @param    arr                 an array of some kind
+	 * @param arr an array of some kind
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	private void writeArray(Object arr) throws IOException {
@@ -376,13 +372,12 @@ public class XmlCoder extends ParamCoder {
 	}
 
 	/**
-	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings
-	 * from a given array
+	 * write a sequence of &lt;param&gt;[value]&lt;/param&gt; strings from a given array
 	 *
-	 * @param    arr                 an array of some kind
-	 * @param    depth               number of tabs at the beginning of each line
+	 * @param arr an array of some kind
+	 * @param depth number of tabs at the beginning of each line
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	private void writeArray(Object arr, int depth) throws IOException {

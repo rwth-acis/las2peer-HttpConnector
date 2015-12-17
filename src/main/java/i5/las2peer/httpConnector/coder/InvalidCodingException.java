@@ -1,11 +1,9 @@
 package i5.las2peer.httpConnector.coder;
 
 /**
- * Exception thrown by a {@link XmlDecoder} subclass on problems during decoding
- * of a message.
+ * Exception thrown by a {@link XmlDecoder} subclass on problems during decoding of a message.
  *
  */
-
 public class InvalidCodingException extends CodingException {
 
 	private static final long serialVersionUID = -3990070000012164435L;

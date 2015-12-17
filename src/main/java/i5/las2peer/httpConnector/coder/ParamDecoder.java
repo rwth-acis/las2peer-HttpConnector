@@ -4,20 +4,19 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * The abstract ParamDecoder class defines all necessary methods to decode
- * parameters coded by a fitting {@link ParamCoder} class.
+ * The abstract ParamDecoder class defines all necessary methods to decode parameters coded by a fitting
+ * {@link ParamCoder} class.
  *
  */
-
 public abstract class ParamDecoder {
 
 	/**
 	 * check the header of any message to decode
 	 *
-	 * @return   number of (top level) values transported
+	 * @return number of (top level) values transported
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public abstract int checkHeader() throws InvalidCodingException, IOException;
@@ -25,8 +24,8 @@ public abstract class ParamDecoder {
 	/**
 	 * Method checking the rest of the message after decoding all of the parameters
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void checkFooter() throws InvalidCodingException, IOException;
@@ -34,10 +33,10 @@ public abstract class ParamDecoder {
 	/**
 	 * decode a single parameter
 	 *
-	 * @return   an Object
+	 * @return an Object
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public abstract Object decodeSingle() throws InvalidCodingException, IOException;
@@ -45,10 +44,10 @@ public abstract class ParamDecoder {
 	/**
 	 * decode an array of parameters
 	 *
-	 * @return   an Object[]
+	 * @return an Object[]
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public abstract Serializable[] decodeArray() throws InvalidCodingException, IOException;

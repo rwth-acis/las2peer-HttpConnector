@@ -1,11 +1,9 @@
 package i5.las2peer.httpConnector.client;
 
 /**
- * Exception thrown if the {@link Client} is not able to interpret the answer
- * of the server.
+ * Exception thrown if the {@link Client} is not able to interpret the answer of the server.
  *
  */
-
 public class InvalidServerAnswerException extends ConnectorClientException {
 
 	private static final long serialVersionUID = 4695080845712779101L;

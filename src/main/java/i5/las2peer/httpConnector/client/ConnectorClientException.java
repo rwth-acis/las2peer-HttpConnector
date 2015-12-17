@@ -4,7 +4,6 @@ package i5.las2peer.httpConnector.client;
  * Base class for all exceptions thrown by the {@link Client}.
  *
  */
-
 public class ConnectorClientException extends Exception {
 
 	private static final long serialVersionUID = 8822984983692866764L;

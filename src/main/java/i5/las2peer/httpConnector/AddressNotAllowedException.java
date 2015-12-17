@@ -3,11 +3,10 @@ package i5.las2peer.httpConnector;
 import i5.las2peer.api.ConnectorException;
 
 /**
- * Exception thrown (and handled) inside the (@see HttpConnectorRequestHandler)
- * when one tries to access a session from different remote addresses.
+ * Exception thrown (and handled) inside the (@see HttpConnectorRequestHandler) when one tries to access a session from
+ * different remote addresses.
  *
  */
-
 public class AddressNotAllowedException extends ConnectorException {
 
 	private static final long serialVersionUID = 3147896844336450962L;

@@ -27,73 +27,73 @@ import i5.las2peer.tools.SimpleTools;
 public class ClientPastryTest {
 
 	public static final String testServiceClass = i5.las2peer.testing.TestService.class.getName();
-	
+
 	private PastryNodeImpl node;
-	
-	
+
 	@Before
-	public void setup () throws Exception {
+	public void setup() throws Exception {
 		// start a launcher
 		node = new PastryNodeImpl(9001, null);
 		node.launch();
-		
-		UserAgent agent = MockAgentFactory.getEve(); agent.unlockPrivateKey("evespass");
+
+		UserAgent agent = MockAgentFactory.getEve();
+		agent.unlockPrivateKey("evespass");
 		node.storeAgent(agent);
-		agent = MockAgentFactory.getAdam(); agent.unlockPrivateKey("adamspass");
+		agent = MockAgentFactory.getAdam();
+		agent.unlockPrivateKey("adamspass");
 		node.storeAgent(agent);
-		
-		
-		final HttpConnector connector = new HttpConnector ();
-		connector.setPort( 38080 );
-		connector.start( node );
-		
+
+		final HttpConnector connector = new HttpConnector();
+		connector.setPort(38080);
+		connector.start(node);
+
 		String passPhrase = SimpleTools.createRandomString(20);
-		
+
 		ServiceAgent myAgent = ServiceAgent.createServiceAgent(testServiceClass, passPhrase);
 		myAgent.unlockPrivateKey(passPhrase);
-		
-		node.registerReceiver(myAgent);		
+
+		node.registerReceiver(myAgent);
 	}
-	
+
 	@After
-	public void tearDown () {
+	public void tearDown() {
 		node.shutDown();
 	}
-	
-	
+
 	@Test
-	public void test() throws MalformedXMLException, IOException, UnableToConnectException, AuthenticationFailedException, TimeoutException, ServerErrorException, AccessDeniedException, NotFoundException, ConnectorClientException, InterruptedException {
+	public void test() throws MalformedXMLException, IOException, UnableToConnectException,
+			AuthenticationFailedException, TimeoutException, ServerErrorException, AccessDeniedException,
+			NotFoundException, ConnectorClientException, InterruptedException {
 		UserAgent adam = MockAgentFactory.getAdam();
-		
-		System.out.println ("adam: " + adam.getId());
-		
-		Client c = new Client ( "localhost", 38080, "" + adam.getId(), "adamspass");
-		c.setSessionTimeout ( 1000 );
+
+		System.out.println("adam: " + adam.getId());
+
+		Client c = new Client("localhost", 38080, "" + adam.getId(), "adamspass");
+		c.setSessionTimeout(1000);
 		c.connect();
-		
+
 		c.invoke(testServiceClass, "storeEnvelopeString", "ein test");
-		
-		Object result = c.invoke( testServiceClass,  "getEnvelopeString", new Object[0] );
-		
-		assertEquals ( "ein test", result);
-		
-		Thread.sleep ( 500 );
+
+		Object result = c.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+
+		assertEquals("ein test", result);
+
+		Thread.sleep(500);
 		c.disconnect();
-		
+
 		UserAgent eve = MockAgentFactory.getEve();
-		System.out.println ("eve: " + eve.getId());
-		
-		Client c2 = new Client ( "localhost", 38080, "" + eve.getId(), "evespass");
+		System.out.println("eve: " + eve.getId());
+
+		Client c2 = new Client("localhost", 38080, "" + eve.getId(), "evespass");
 		c.setSessionOutdate(3000);
 		c.connect();
-		
+
 		try {
-			result = c2.invoke( testServiceClass,  "getEnvelopeString", new Object[0] );
-			fail ( "AccessDeniedException expected");
-		} catch ( AccessDeniedException e ) {}
-		
-		
-		
+			result = c2.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+			fail("AccessDeniedException expected");
+		} catch (AccessDeniedException e) {
+		}
+
 	}
 
 }

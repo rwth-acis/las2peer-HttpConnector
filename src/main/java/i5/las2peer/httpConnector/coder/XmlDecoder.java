@@ -14,11 +14,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * The XmlDecoder decodes parameters coded by the {@link XmlCoder} and read as XML data
- * from the given reader.
+ * The XmlDecoder decodes parameters coded by the {@link XmlCoder} and read as XML data from the given reader.
  *
  */
-
 public class XmlDecoder extends ParamDecoder {
 
 	private BufferedReader reader;
@@ -36,8 +34,8 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * Method that should check the header of any message to decode
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public int checkHeader() throws InvalidCodingException, IOException {
@@ -63,8 +61,8 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * Method checking the rest of the message after decoding all of the parameters
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public void checkFooter() throws InvalidCodingException, IOException {
@@ -74,8 +72,8 @@ public class XmlDecoder extends ParamDecoder {
 			line = reader.readLine();
 
 		if (!line.matches("</objectlist>"))
-			throw new InvalidCodingException("Expected closing tag for root element objectlist, but found '" + line
-					+ "' instead!");
+			throw new InvalidCodingException(
+					"Expected closing tag for root element objectlist, but found '" + line + "' instead!");
 
 		do {
 			line = reader.readLine();
@@ -87,10 +85,10 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * decode a single parameter
 	 *
-	 * @return   an Object
+	 * @return an Object
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public Object decodeSingle() throws InvalidCodingException, IOException {
@@ -106,17 +104,17 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * decode an array of parameters
 	 *
-	 * @return   an Object[]
+	 * @return an Object[]
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	public Serializable[] decodeArray() throws InvalidCodingException, IOException {
 		Serializable[] result = new Serializable[iParamCount];
 
-		Pattern pParam = Pattern
-				.compile("\\s*<param\\s+type=\"([A-Za-z\\.0-9]+)\"(\\s+class=\"([A-Za-z\\.0-9;\\[]+)\"\\s+length=\"([0-9]+)\")?\\s*>(.*)");
+		Pattern pParam = Pattern.compile(
+				"\\s*<param\\s+type=\"([A-Za-z\\.0-9]+)\"(\\s+class=\"([A-Za-z\\.0-9;\\[]+)\"\\s+length=\"([0-9]+)\")?\\s*>(.*)");
 		Pattern pSingle = Pattern.compile("\\s*<param\\s+[^>]*>([^<]+)</param>\\s*");
 
 		for (int i = 0; i < iParamCount; i++) {
@@ -200,15 +198,15 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * Reads a nested CDATA section and returns it as a string.
 	 *
-	 * The parsing will be started with the given line and extended to a sufficient
-	 * number of lines, if the section does not end within the given line.
+	 * The parsing will be started with the given line and extended to a sufficient number of lines, if the section does
+	 * not end within the given line.
 	 *
-	 * @param    currentLine         a  String
+	 * @param currentLine a String
 	 *
-	 * @return   a String
+	 * @return a String
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	private String readCDataSection(String currentLine) throws InvalidCodingException, IOException {
@@ -249,9 +247,9 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * Deserializes a String into a bunch of java objects if possible.
 	 *
-	 * @param    s                   a  String
+	 * @param s a String
 	 *
-	 * @return   a Serializable
+	 * @return a Serializable
 	 *
 	 */
 	private Serializable deserializeString(String s) throws IOException, ClassNotFoundException {
@@ -268,18 +266,16 @@ public class XmlDecoder extends ParamDecoder {
 	}
 
 	/**
-	 * decodes an array of values in the parameter array
-	 * the opening tyg <param class=...> has already been read at this point.
-	 * This method will read the closing tag </param> after successfully processing
-	 * of the values
+	 * decodes an array of values in the parameter array the opening tyg <param class=...> has already been read at this
+	 * point. This method will read the closing tag </param> after successfully processing of the values
 	 *
-	 * @param    className           a  String
-	 * @param    count               an int
+	 * @param className a String
+	 * @param count an int
 	 *
-	 * @return   an Object
+	 * @return an Object
 	 *
-	 * @exception   InvalidCodingException
-	 * @exception   IOException
+	 * @exception InvalidCodingException
+	 * @exception IOException
 	 *
 	 */
 	private Serializable decodeParamArray(String className, int count) throws InvalidCodingException, IOException {
@@ -313,8 +309,8 @@ public class XmlDecoder extends ParamDecoder {
 			else if (className.equals("Integer"))
 				result = new Integer[count];
 			else
-				throw new InvalidCodingException("Arrays of type " + className
-						+ " are not implemented in this protocol!");
+				throw new InvalidCodingException(
+						"Arrays of type " + className + " are not implemented in this protocol!");
 
 			Pattern pElement = Pattern.compile("\\s*<element>([^>]*)</element>\\s*");
 			for (int i = 0; i < count; i++) {
@@ -352,9 +348,9 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * reads a <i>count</i> string values given by <element> nodes.
 	 *
-	 * @param    count               an int
+	 * @param count an int
 	 *
-	 * @return   a String[]
+	 * @return a String[]
 	 *
 	 */
 	private String[] decodeStringArray(int count) throws IOException, InvalidCodingException {
@@ -398,9 +394,9 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * reads a byte array given as cdata
 	 *
-	 * @param    count               an int
+	 * @param count an int
 	 *
-	 * @return   a String[]
+	 * @return a String[]
 	 *
 	 */
 	private byte[] decodeByteArray(int count) throws IOException, InvalidCodingException {
@@ -409,8 +405,8 @@ public class XmlDecoder extends ParamDecoder {
 		do {
 			c = (char) reader.read();
 			if (c != ' ' && c != '\n' && c != '\t' && c != '\r' && c != '<')
-				throw new InvalidCodingException("Invalid character: " + c
-						+ " before CDATA block of byte array parameter!\n");
+				throw new InvalidCodingException(
+						"Invalid character: " + c + " before CDATA block of byte array parameter!\n");
 		} while (c != '<');
 
 		// read ![CDATA[
@@ -439,7 +435,8 @@ public class XmlDecoder extends ParamDecoder {
 				if (iWait > 10000)
 					throw new InvalidCodingException("Unable to read " + count + " chars from the input - Timeout!");
 			} else if (iNow == -1) {
-				throw new InvalidCodingException("Unable to read " + count + " chars from the input - input has ended!");
+				throw new InvalidCodingException(
+						"Unable to read " + count + " chars from the input - input has ended!");
 			}
 		}
 
@@ -460,12 +457,12 @@ public class XmlDecoder extends ParamDecoder {
 	/**
 	 * decode a long array
 	 *
-	 * @param    count               an int
+	 * @param count an int
 	 *
-	 * @return   a long[]
+	 * @return a long[]
 	 *
-	 * @exception   IOException
-	 * @exception   InvalidCodingException
+	 * @exception IOException
+	 * @exception InvalidCodingException
 	 *
 	 */
 	private long[] decodeLongArray(int count) throws IOException, InvalidCodingException {

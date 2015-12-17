@@ -1,14 +1,12 @@
 package i5.las2peer.httpConnector.client;
 
 /**
- * ConnectorClientException wrapper for the ParameterTypeNotImplementedException
- * of the coder package.
+ * ConnectorClientException wrapper for the ParameterTypeNotImplementedException of the coder package.
  *
- * This exception will be thrown by the client, if a user tries to send an
- * invocation parameter which type is not sendable via this connector.
+ * This exception will be thrown by the client, if a user tries to send an invocation parameter which type is not
+ * sendable via this connector.
  *
  */
-
 public class ParameterTypeNotImplementedException extends ConnectorClientException {
 
 	private static final long serialVersionUID = 7305227514839056712L;

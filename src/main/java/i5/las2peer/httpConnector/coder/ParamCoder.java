@@ -5,22 +5,19 @@ import java.io.Serializable;
 import java.io.Writer;
 
 /**
- * The abstract ParamCode Class defines all methods necessary to code parameters
- * of a message into a java.io.Writer.
+ * The abstract ParamCode Class defines all methods necessary to code parameters of a message into a java.io.Writer.
  *
  */
-
 public abstract class ParamCoder {
 
 	protected Writer out = null;
 
 	/**
-	 * Standard constructor.
-	 * Overriding classes must use this signature!
+	 * Standard constructor. Overriding classes must use this signature!
 	 *
-	 * @param    out                 a  Writer
+	 * @param out a Writer
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public ParamCoder(Writer out) throws IOException {
@@ -30,10 +27,10 @@ public abstract class ParamCoder {
 	/**
 	 * Writes an Object as a parameter to the outputstream
 	 *
-	 * @param    o                   an Object
+	 * @param o an Object
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException 	Parameter type is not implemented in this codes
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException Parameter type is not implemented in this codes
 	 *
 	 */
 	public void write(Object o) throws IOException, ParameterTypeNotImplementedException {
@@ -85,9 +82,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded byte to the outputstream
 	 *
-	 * @param    b                   a  byte
+	 * @param b a byte
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(byte b) throws IOException, ParameterTypeNotImplementedException;
@@ -95,9 +92,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded int to the outputstream
 	 *
-	 * @param    i                   an int
+	 * @param i an int
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(int i) throws IOException, ParameterTypeNotImplementedException;
@@ -105,10 +102,10 @@ public abstract class ParamCoder {
 	/**
 	 * writes a coded short to the output stream
 	 *
-	 * @param    s                   a  short
+	 * @param s a short
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException
 	 *
 	 */
 	public abstract void write(short s) throws IOException, ParameterTypeNotImplementedException;
@@ -116,9 +113,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded char to the outputstream
 	 *
-	 * @param    c                   a  char
+	 * @param c a char
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(char c) throws IOException, ParameterTypeNotImplementedException;
@@ -126,9 +123,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded boolean to the outputstream
 	 *
-	 * @param    b                   a  boolean
+	 * @param b a boolean
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(boolean b) throws IOException, ParameterTypeNotImplementedException;
@@ -136,9 +133,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded long to the outputstream
 	 *
-	 * @param    b                   a  long
+	 * @param b a long
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(long b) throws IOException, ParameterTypeNotImplementedException;
@@ -146,9 +143,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded double to the outputstream
 	 *
-	 * @param    b                   a  double
+	 * @param b a double
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(double b) throws IOException, ParameterTypeNotImplementedException;
@@ -156,9 +153,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded float to the outputstream
 	 *
-	 * @param    f                   a  float
+	 * @param f a float
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(float f) throws IOException, ParameterTypeNotImplementedException;
@@ -166,9 +163,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded String to the outputstream
 	 *
-	 * @param    s                   a  String
+	 * @param s a String
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(String s) throws IOException, ParameterTypeNotImplementedException;
@@ -176,9 +173,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded byte array to the outputstream
 	 *
-	 * @param    bytes               a  byte[]
+	 * @param bytes a byte[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(byte[] bytes) throws IOException, ParameterTypeNotImplementedException;
@@ -186,9 +183,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded short array to the outputstream
 	 *
-	 * @param    shorts               a  short[]
+	 * @param shorts a short[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(short[] shorts) throws IOException, ParameterTypeNotImplementedException;
@@ -196,9 +193,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded integer array to the outputstream
 	 *
-	 * @param    integers            an int[]
+	 * @param integers an int[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(int[] integers) throws IOException, ParameterTypeNotImplementedException;
@@ -206,9 +203,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded char array to the outputstream
 	 *
-	 * @param    characters          a  char[]
+	 * @param characters a char[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(char[] characters) throws IOException, ParameterTypeNotImplementedException;
@@ -216,9 +213,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded long array to the outputstream
 	 *
-	 * @param    longs               a  long[]
+	 * @param longs a long[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(long[] longs) throws IOException, ParameterTypeNotImplementedException;
@@ -226,9 +223,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded double array to the outputstream
 	 *
-	 * @param    doubles             a  double[]
+	 * @param doubles a double[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(double[] doubles) throws IOException, ParameterTypeNotImplementedException;
@@ -236,9 +233,9 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded float array to the outputstream
 	 *
-	 * @param    floats              a  float[]
+	 * @param floats a float[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(float[] floats) throws IOException, ParameterTypeNotImplementedException;
@@ -246,21 +243,20 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded String array to the outputstream
 	 *
-	 * @param    strings              a  String[]
+	 * @param strings a String[]
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void write(String[] strings) throws IOException, ParameterTypeNotImplementedException;
 
 	/**
-	 * Writes a coded array of a java wrapper class (Integer, Byte, Long etc.)
-	 * ot the outputstram
+	 * Writes a coded array of a java wrapper class (Integer, Byte, Long etc.) ot the outputstram
 	 *
-	 * @param    o                   an Object
+	 * @param o an Object
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException
 	 *
 	 */
 	public abstract void writeWrapperArray(Object o) throws IOException, ParameterTypeNotImplementedException;
@@ -268,10 +264,10 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a coded Serializable object stream as byte array to the outputstream
 	 *
-	 * @param    o                   a  Serializable
+	 * @param o a Serializable
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException
 	 *
 	 */
 	public abstract void writeSerializable(Serializable o) throws IOException, ParameterTypeNotImplementedException;
@@ -279,8 +275,8 @@ public abstract class ParamCoder {
 	/**
 	 * Writes a null value as coded parameter to the output stream
 	 *
-	 * @exception   IOException
-	 * @exception   ParameterTypeNotImplementedException
+	 * @exception IOException
+	 * @exception ParameterTypeNotImplementedException
 	 *
 	 */
 	public abstract void writeNull() throws IOException, ParameterTypeNotImplementedException;
@@ -288,7 +284,7 @@ public abstract class ParamCoder {
 	/**
 	 * Method called by the using class to start the encoding
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void header(int count) throws IOException, ParameterTypeNotImplementedException;
@@ -296,20 +292,19 @@ public abstract class ParamCoder {
 	/**
 	 * Method called by the using class to finish the coding
 	 *
-	 * @exception   IOException
+	 * @exception IOException
 	 *
 	 */
 	public abstract void footer() throws IOException, ParameterTypeNotImplementedException;
 
 	/**
-	 * unwrap an array of a wrapper class and transform it into an array of the
-	 * native class
+	 * unwrap an array of a wrapper class and transform it into an array of the native class
 	 *
-	 * @param    arr                 an Object
+	 * @param arr an Object
 	 *
-	 * @return   array of a native class
+	 * @return array of a native class
 	 *
-	 * @exception IllegalArgumentException 	given array is not an array of a wrapper class
+	 * @exception IllegalArgumentException given array is not an array of a wrapper class
 	 *
 	 */
 	public static Object unwrapArray(Object arr) {

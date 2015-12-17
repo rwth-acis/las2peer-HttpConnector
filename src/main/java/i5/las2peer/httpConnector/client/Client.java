@@ -1,9 +1,5 @@
 package i5.las2peer.httpConnector.client;
 
-import i5.las2peer.httpConnector.coder.InvalidCodingException;
-import i5.las2peer.httpConnector.coder.ParamCoder;
-import i5.las2peer.httpConnector.coder.ParamDecoder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,12 +12,15 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import i5.las2peer.httpConnector.coder.InvalidCodingException;
+import i5.las2peer.httpConnector.coder.ParamCoder;
+import i5.las2peer.httpConnector.coder.ParamDecoder;
+
 /**
- * The connector client is the basic class for accessing a remote LAS2peer server
- * via the http connector within any java application.
+ * The connector client is the basic class for accessing a remote LAS2peer server via the http connector within any java
+ * application.
  *
  */
-
 public class Client {
 
 	public static final int DEFAULT_PORT = 8080;
@@ -48,7 +47,7 @@ public class Client {
 	private boolean bConnected = false;
 	private String sSessionId = null;
 
-	//private boolean bUsePersistent = false;
+	// private boolean bUsePersistent = false;
 	private long lOutdateS = DEFAULT_OUTDATE_S;
 
 	private boolean bTryPersistent = false;
@@ -59,7 +58,7 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
+	 * @param host target host name
 	 *
 	 */
 	public Client(String host) {
@@ -69,8 +68,8 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
-	 * @param    port                http connector port on the target host
+	 * @param host target host name
+	 * @param port http connector port on the target host
 	 *
 	 */
 	public Client(String host, int port) {
@@ -81,10 +80,10 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
-	 * @param    port                http connector port on the target host
-	 * @param    user                login name
-	 * @param    passwd              password
+	 * @param host target host name
+	 * @param port http connector port on the target host
+	 * @param user login name
+	 * @param passwd password
 	 *
 	 */
 	public Client(String host, int port, String user, String passwd) {
@@ -96,11 +95,11 @@ public class Client {
 	/**
 	 * Constructor for reataching to a remote session
 	 *
-	 * @param    host                a  String
-	 * @param    port                an int
-	 * @param    user                a  String
-	 * @param    passwd              a  String
-	 * @param    session             a  String
+	 * @param host a String
+	 * @param port an int
+	 * @param user a String
+	 * @param passwd a String
+	 * @param session a String
 	 *
 	 */
 	public Client(String host, int port, String user, String passwd, String session) {
@@ -113,9 +112,9 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
-	 * @param    port                http connector port on the target host
-	 * @param    timeout             timeout of the generated session in milliseconds
+	 * @param host target host name
+	 * @param port http connector port on the target host
+	 * @param timeout timeout of the generated session in milliseconds
 	 *
 	 */
 	public Client(String host, int port, long timeout) {
@@ -127,8 +126,8 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
-	 * @param    timeout             timeout of the generated session in milliseconds
+	 * @param host target host name
+	 * @param timeout timeout of the generated session in milliseconds
 	 *
 	 */
 	public Client(String host, long timeout) {
@@ -139,11 +138,11 @@ public class Client {
 	/**
 	 * Constructor
 	 *
-	 * @param    host                target host name
-	 * @param    port                http connector port on the target host
-	 * @param    timeout             timeout of the generated session in milliseconds
-	 * @param    user                login name
-	 * @param    passwd              password
+	 * @param host target host name
+	 * @param port http connector port on the target host
+	 * @param timeout timeout of the generated session in milliseconds
+	 * @param user login name
+	 * @param passwd password
 	 *
 	 */
 	public Client(String host, int port, long timeout, String user, String passwd) {
@@ -157,9 +156,9 @@ public class Client {
 	/**
 	 * set the password for the current user
 	 *
-	 * @param    passwd                 new password to use
+	 * @param passwd new password to use
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setPasswd(String passwd) throws ConnectorClientException {
@@ -171,7 +170,7 @@ public class Client {
 
 	/**
 	 *
-	 * @return   name of the LAS2peer user
+	 * @return name of the LAS2peer user
 	 *
 	 */
 	public String getUser() {
@@ -181,9 +180,9 @@ public class Client {
 	/**
 	 * set the user login name for connecting to the remote las server
 	 *
-	 * @param    user                a  String
+	 * @param user a String
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setUser(String user) throws ConnectorClientException {
@@ -195,7 +194,7 @@ public class Client {
 
 	/**
 	 *
-	 * @return   name or ip of the las server host
+	 * @return name or ip of the las server host
 	 *
 	 */
 	public String getHost() {
@@ -205,9 +204,9 @@ public class Client {
 	/**
 	 * Set the target host of the las server to connect to
 	 *
-	 * @param    host                new hostname
+	 * @param host new hostname
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setHost(String host) throws ConnectorClientException {
@@ -219,7 +218,7 @@ public class Client {
 
 	/**
 	 *
-	 * @return   the number of the used port at the las server
+	 * @return the number of the used port at the las server
 	 *
 	 */
 	public int getPort() {
@@ -229,9 +228,9 @@ public class Client {
 	/**
 	 * Set the port of the connector
 	 *
-	 * @param    port                new port number
+	 * @param port new port number
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setPort(int port) throws ConnectorClientException {
@@ -244,9 +243,9 @@ public class Client {
 	/**
 	 * set the flag if the client is to try to open persistent sessions
 	 *
-	 * @param    tryP                a  boolean
+	 * @param tryP a boolean
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setTryPersistent(boolean tryP) throws ConnectorClientException {
@@ -259,7 +258,7 @@ public class Client {
 	/**
 	 * returns of the client tries to open persistent sessions
 	 *
-	 * @return   a boolean
+	 * @return a boolean
 	 *
 	 */
 	public boolean getTryPersistent() {
@@ -269,7 +268,7 @@ public class Client {
 	/**
 	 * returns true if the client is connected and the session is persistent
 	 *
-	 * @return   a boolean
+	 * @return a boolean
 	 *
 	 */
 	public boolean isPersistent() {
@@ -279,7 +278,7 @@ public class Client {
 	/**
 	 * return the (tried or real) session timeout in ms
 	 *
-	 * @return   a long
+	 * @return a long
 	 *
 	 */
 	public long getSessionTimeout() {
@@ -289,9 +288,9 @@ public class Client {
 	/**
 	 * Set the session timeout value to be requested on the next connection opening
 	 *
-	 * @param    time                timespan in ms
+	 * @param time timespan in ms
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setSessionTimeout(long time) throws ConnectorClientException {
@@ -304,7 +303,7 @@ public class Client {
 	/**
 	 * return the (tried or real) session outdate time in s
 	 *
-	 * @return   a long
+	 * @return a long
 	 *
 	 */
 	public long getSessionOutdate() {
@@ -314,9 +313,9 @@ public class Client {
 	/**
 	 * set the outedate time to use for opening new sessions
 	 *
-	 * @param    outdate             timespan in s
+	 * @param outdate timespan in s
 	 *
-	 * @exception   ConnectorClientException 	client is currently connected
+	 * @exception ConnectorClientException client is currently connected
 	 *
 	 */
 	public void setSessionOutdate(long outdate) throws ConnectorClientException {
@@ -329,7 +328,7 @@ public class Client {
 	/**
 	 * returns if the client uses an https connection to the remote las
 	 *
-	 * @return   a boolean
+	 * @return a boolean
 	 *
 	 */
 	public boolean isUsingHttps() {
@@ -339,9 +338,9 @@ public class Client {
 	/**
 	 * change the setting for the usage of the https protocol
 	 *
-	 * @param    use                 a  boolean
+	 * @param use a boolean
 	 *
-	 * @exception   ConnectorClientException
+	 * @exception ConnectorClientException
 	 *
 	 */
 	public void setUseHttps(boolean use) throws ConnectorClientException {
@@ -356,8 +355,8 @@ public class Client {
 	 *
 	 * This method will be implicitly called on an attempt to use a not existing connection.
 	 *
-	 * @exception   AuthenticationFailedException
-	 * @exception   UnableToConnectException
+	 * @exception AuthenticationFailedException
+	 * @exception UnableToConnectException
 	 *
 	 */
 	public void connect() throws AuthenticationFailedException, UnableToConnectException {
@@ -373,7 +372,7 @@ public class Client {
 	/**
 	 * Tries to open a new session with the current connection data
 	 *
-	 * @exception   UnableToConnectException
+	 * @exception UnableToConnectException
 	 *
 	 */
 	private void createSession() throws UnableToConnectException, AuthenticationFailedException {
@@ -436,8 +435,7 @@ public class Client {
 	}
 
 	/**
-	 * tries to reattach to an existing (persitent) session using the current
-	 * connection data
+	 * tries to reattach to an existing (persitent) session using the current connection data
 	 *
 	 */
 	private void reattachToSession() throws UnableToConnectException {
@@ -457,8 +455,8 @@ public class Client {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK)
-				throw new UnableToConnectException("Unable to connect to remote session - response code: "
-						+ conn.getResponseCode());
+				throw new UnableToConnectException(
+						"Unable to connect to remote session - response code: " + conn.getResponseCode());
 
 			bConnected = true;
 			bIsPersistent = true;
@@ -470,8 +468,8 @@ public class Client {
 	/**
 	 * disconnects an open connection
 	 *
-	 * @exception   InvalidServerAnswerException
-	 * @exception   UnableToConnectException
+	 * @exception InvalidServerAnswerException
+	 * @exception UnableToConnectException
 	 *
 	 */
 	public void disconnect() throws InvalidServerAnswerException, UnableToConnectException {
@@ -483,7 +481,7 @@ public class Client {
 		try {
 			URL url = new URL(sProtocol + sHost + ":" + iPort + "/closesession?SESSION=" + sSessionId);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			//int length = conn.getContentLength();
+			// int length = conn.getContentLength();
 
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_PRECON_FAILED) {
 				// session expired
@@ -502,8 +500,8 @@ public class Client {
 	/**
 	 * tries to detach from the current session
 	 *
-	 * @exception   InvalidServerAnswerException
-	 * @exception   ConnectorClientException
+	 * @exception InvalidServerAnswerException
+	 * @exception ConnectorClientException
 	 *
 	 */
 	public void detach() throws InvalidServerAnswerException, ConnectorClientException {
@@ -526,13 +524,13 @@ public class Client {
 	}
 
 	/**
-	 * reads the content of an http answer into a resulting string
-	 * the length of the expected content if given by the length parameter
+	 * reads the content of an http answer into a resulting string the length of the expected content if given by the
+	 * length parameter
 	 *
-	 * @param    content             an InputStream
-	 * @param    length              an int
+	 * @param content an InputStream
+	 * @param length an int
 	 *
-	 * @return   a String
+	 * @return a String
 	 *
 	 */
 	private String readHttpContent(InputStream content, int length) throws UnableToConnectException, IOException {
@@ -560,7 +558,7 @@ public class Client {
 	/**
 	 * Set the code class to be used for encoding message parameters
 	 *
-	 * @param    className           a  String
+	 * @param className a String
 	 *
 	 */
 	public void setCoderClass(String className) {
@@ -570,7 +568,7 @@ public class Client {
 	/**
 	 * returns the currently used coder class
 	 *
-	 * @return   a String
+	 * @return a String
 	 *
 	 */
 	public String getCoder() {
@@ -580,7 +578,7 @@ public class Client {
 	/**
 	 * returns if the client is currently connected
 	 *
-	 * @return   a boolean
+	 * @return a boolean
 	 *
 	 */
 	public boolean isConnected() {
@@ -590,12 +588,11 @@ public class Client {
 	/**
 	 * returns if the client is currently connected
 	 *
-	 * depending on the tryTouch parameter a touchSession is invoked before
-	 * returning the connective flag
+	 * depending on the tryTouch parameter a touchSession is invoked before returning the connective flag
 	 *
-	 * @param    tryTouch            a  boolean
+	 * @param tryTouch a boolean
 	 *
-	 * @return   a boolean
+	 * @return a boolean
 	 *
 	 */
 	public boolean isConnected(boolean tryTouch) {
@@ -613,7 +610,7 @@ public class Client {
 	/**
 	 * returns the id of the currently used session at the server
 	 *
-	 * @return   a String
+	 * @return a String
 	 *
 	 */
 	public String getSessionId() {
@@ -623,7 +620,7 @@ public class Client {
 	/**
 	 * returns the timeout in milliseconds of the currently open session.
 	 *
-	 * @return   a long
+	 * @return a long
 	 *
 	 */
 	public long getTimeoutMs() {
@@ -631,36 +628,35 @@ public class Client {
 	}
 
 	/**
-	 * Invokes a service method at the server. If not connected a connections
-	 * attempt will be performed. The result of the call will be returned as an
-	 * object.
+	 * Invokes a service method at the server. If not connected a connections attempt will be performed. The result of
+	 * the call will be returned as an object.
 	 *
 	 *
-	 * @param    service             a  String
-	 * @param    method              a  String
-	 * @param    params              an Object[]
+	 * @param service a String
+	 * @param method a String
+	 * @param params an Object[]
 	 *
-	 * @return   an Object
+	 * @return an Object
 	 *
-	 * @exception   UnableToConnectException
-	 * @exception   AuthenticationFailedException
-	 * @exception   TimeoutException
-	 * @exception   ParameterTypeNotImplementedException
-	 * @exception   ServerErrorException
-	 * @exception   AccessDeniedException
-	 * @exception   NotFoundException
-	 * @exception   ConnectorClientException
+	 * @exception UnableToConnectException
+	 * @exception AuthenticationFailedException
+	 * @exception TimeoutException
+	 * @exception ParameterTypeNotImplementedException
+	 * @exception ServerErrorException
+	 * @exception AccessDeniedException
+	 * @exception NotFoundException
+	 * @exception ConnectorClientException
 	 *
 	 */
-	public Object invoke(String service, String method, Object... params) throws UnableToConnectException,
-			AuthenticationFailedException, TimeoutException, ServerErrorException, AccessDeniedException,
-			NotFoundException, ConnectorClientException {
+	public Object invoke(String service, String method, Object... params)
+			throws UnableToConnectException, AuthenticationFailedException, TimeoutException, ServerErrorException,
+			AccessDeniedException, NotFoundException, ConnectorClientException {
 		if (!bConnected)
 			connect();
 
 		try {
-			URL url = new URL((bUseHttps) ? "https" : "http", sHost, iPort, "/" + service + "/" + method + "?SESSION="
-					+ sSessionId);
+			URL url = new URL((bUseHttps) ? "https" : "http", sHost, iPort,
+					"/" + service + "/" + method + "?SESSION=" + sSessionId);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestProperty("Content-Type", "text/xml");
 
@@ -691,12 +687,13 @@ public class Client {
 				try {
 					if ("text/xml".equals(connection.getContentType())) {
 						// we have a object array response describing the exception
-						Object[] result = (Object[]) interpretInvocationResult((InputStream) connection
-								.getErrorStream());
+						Object[] result = (Object[]) interpretInvocationResult(
+								(InputStream) connection.getErrorStream());
 						throw new ServerErrorException((Exception) result[3]);
 					} else
 						// simple text message (to stay compatible to older versions of the connector
-						mess = readHttpContent((InputStream) connection.getErrorStream(), connection.getContentLength());
+						mess = readHttpContent((InputStream) connection.getErrorStream(),
+								connection.getContentLength());
 				} catch (ServerErrorException e) {
 					throw e;
 				} catch (Exception e) {
@@ -717,12 +714,13 @@ public class Client {
 				throw new ConnectorClientException("The server could no read the invocation parameters!");
 
 			if (responseCode == HttpURLConnection.HTTP_NOT_IMPLEMENTED) {
-				//String mess = ""; //readHttpContent( (InputStream) connection.getContent(), connection.getContentLength() );
+				// String mess = ""; //readHttpContent( (InputStream) connection.getContent(),
+				// connection.getContentLength() );
 				throw new ReturnTypeNotImplementedException();
 			}
 
 			String type = connection.getContentType();
-			//int length = connection.getContentLength();
+			// int length = connection.getContentLength();
 			if (!"text/xml".equals(type))
 				throw new ConnectorClientException(
 						"Problems to interpret the server's answer - content type not text/xml!");
@@ -740,15 +738,15 @@ public class Client {
 	/**
 	 * writes an encoding of the object parameter array to the outputStream
 	 *
-	 * @param    params              an Object[]
+	 * @param params an Object[]
 	 *
-	 * @exception   ParameterTypeNotImplementedException
-	 * @exception   UnableToLoadCoderException
-	 * @exception   IOException
+	 * @exception ParameterTypeNotImplementedException
+	 * @exception UnableToLoadCoderException
+	 * @exception IOException
 	 *
 	 */
-	public String getParameterCoding(Object[] params) throws ParameterTypeNotImplementedException, IOException,
-			ConnectorClientException {
+	public String getParameterCoding(Object[] params)
+			throws ParameterTypeNotImplementedException, IOException, ConnectorClientException {
 		try {
 			ParamCoder coder = null;
 
@@ -780,7 +778,7 @@ public class Client {
 	/**
 	 * tries to touch the session at the server
 	 *
-	 * @exception   ConnectorClientException
+	 * @exception ConnectorClientException
 	 *
 	 */
 	public void touchSession() throws ConnectorClientException {
@@ -791,7 +789,7 @@ public class Client {
 			URL url = new URL(bUseHttps ? "https" : "http", sHost, iPort, "/touchsession?SESSION=" + sSessionId);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			//int length = conn.getContentLength();
+			// int length = conn.getContentLength();
 
 			int response = conn.getResponseCode();
 
@@ -811,9 +809,9 @@ public class Client {
 	/**
 	 * interprets the content of a open session request an sets the attributes of the connection
 	 *
-	 * @param    content             a  String
+	 * @param content a String
 	 *
-	 * @exception   InvalidServerAnswerException
+	 * @exception InvalidServerAnswerException
 	 *
 	 */
 	private void interpretSessionContent(String content) throws InvalidServerAnswerException {
@@ -826,8 +824,8 @@ public class Client {
 		if (lines[1].matches("<session persistent=\"true\">"))
 			bIsPersistent = true;
 		else if (!lines[1].trim().matches("<session>"))
-			throw new InvalidServerAnswerException("answer has not the expected root node (<session>)" + lines[1]
-					+ "..." + content);
+			throw new InvalidServerAnswerException(
+					"answer has not the expected root node (<session>)" + lines[1] + "..." + content);
 
 		Matcher m = Pattern.compile("<id>([^>]+)</id>").matcher(lines[2]);
 		if (m.matches()) {
@@ -848,16 +846,16 @@ public class Client {
 	}
 
 	/**
-	 * tries to interpret the content of the urlConnections (given as InputStream) either as a
-	 * single object or an array.
+	 * tries to interpret the content of the urlConnections (given as InputStream) either as a single object or an
+	 * array.
 	 *
-	 * @param    content             an InputStream
+	 * @param content an InputStream
 	 *
-	 * @return   an Object
+	 * @return an Object
 	 *
-	 * @exception   ConnectorClientException
-	 * @exception   IOException
-	 * @exception   InvalidCodingException
+	 * @exception ConnectorClientException
+	 * @exception IOException
+	 * @exception InvalidCodingException
 	 *
 	 */
 	private Object interpretInvocationResult(InputStream content) throws ConnectorClientException {

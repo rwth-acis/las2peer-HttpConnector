@@ -1,12 +1,10 @@
 package i5.las2peer.httpConnector.client;
 
 /**
- * Exception thrown by the {@link Client} on an invocation if the invocation
- * itself has been successful but returned an object which could not be shipped
- * via the coders used in the {@link Client}.
+ * Exception thrown by the {@link Client} on an invocation if the invocation itself has been successful but returned an
+ * object which could not be shipped via the coders used in the {@link Client}.
  *
  */
-
 public class ReturnTypeNotImplementedException extends ConnectorClientException {
 
 	private static final long serialVersionUID = -4012999031007106466L;

@@ -44,7 +44,6 @@ import i5.las2peer.security.PassphraseAgent;
  * be needed, but this is not allowed by the las class loaders.
  * 
  */
-
 public class HttpConnectorRequestHandler implements RequestHandler {
 
 	private static final String DEFAULT_DECODER_CLASS = i5.las2peer.httpConnector.coder.XmlDecoder.class.getName();
@@ -95,10 +94,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * The core method of a RequestHandler. For each request, this method will be called.
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 * @exception Exception
 	 * 
@@ -134,8 +131,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			response.setStatus(HttpResponse.STATUS_FORBIDDEN);
 			response.setContentType("text/plain");
 			response.print("Access to this session not allowed from your host!");
-			connector.logError("Access to session " + request.getGetVar(SESSSION_GET_VAR)
-					+ " not allowed from address " + request.getRemoteAddress() + "!");
+			connector.logError("Access to session " + request.getGetVar(SESSSION_GET_VAR) + " not allowed from address "
+					+ request.getRemoteAddress() + "!");
 		}
 
 	}
@@ -143,10 +140,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * Method checkFileRequest
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 */
 	private void checkFileRequest(HttpRequest request, HttpResponse response) {
@@ -207,10 +202,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * handles the request for a session touch
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 */
 	private void touchSessionRequest(HttpRequest request, HttpResponse response) throws AddressNotAllowedException {
@@ -241,13 +234,10 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * The method handling a request for closing a session
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
-	 * @exception AddressNotAllowedException
-	 *                access to the session not allowed (host mismatch)
+	 * @exception AddressNotAllowedException access to the session not allowed (host mismatch)
 	 * 
 	 */
 	private void closeSessionRequest(HttpRequest request, HttpResponse response) throws AddressNotAllowedException {
@@ -256,8 +246,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		HttpSession session = htSessions.get(sid);
 
 		if (session == null) {
-			sendUnauthorizedResponse(response, "No corresponding session available!", request.getRemoteAddress()
-					+ ": closesession request for unknown session " + sid);
+			sendUnauthorizedResponse(response, "No corresponding session available!",
+					request.getRemoteAddress() + ": closesession request for unknown session " + sid);
 			return;
 		}
 
@@ -306,13 +296,10 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * method handling a request for a service method invocation
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
-	 * @exception AddressNotAllowedException
-	 *                access to the session not allowed (host mismatch)
+	 * @exception AddressNotAllowedException access to the session not allowed (host mismatch)
 	 * 
 	 */
 	private void invokeRequest(HttpRequest request, HttpResponse response) throws AddressNotAllowedException {
@@ -322,15 +309,11 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * method handling a request for a service method invocation
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
-	 * @param retry
-	 *            retry (once, recursively) in specific conditions
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
+	 * @param retry retry (once, recursively) in specific conditions
 	 * 
-	 * @exception AddressNotAllowedException
-	 *                access to the session not allowed (host mismatch)
+	 * @exception AddressNotAllowedException access to the session not allowed (host mismatch)
 	 * 
 	 */
 	private void invokeRequest(HttpRequest request, HttpResponse response, boolean retry)
@@ -342,8 +325,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			sess = htSessions.get(sid);
 
 		if (sess == null) {
-			sendUnauthorizedResponse(response, "No corresponding session available!", request.getRemoteAddress()
-					+ ": closesession request for unknown session " + sid);
+			sendUnauthorizedResponse(response, "No corresponding session available!",
+					request.getRemoteAddress() + ": closesession request for unknown session " + sid);
 			return;
 		}
 
@@ -380,8 +363,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 							e.getNodeKey());
 					invokeRequest(request, response, false);
 				} else {
-					sendSecurityProblems(request, response, sid, new L2pSecurityException(
-							"Mediation seems to have failed", e));
+					sendSecurityProblems(request, response, sid,
+							new L2pSecurityException("Mediation seems to have failed", e));
 				}
 			}
 		} catch (NoSuchServiceException | TimeoutException | AgentNotKnownException e) {
@@ -421,8 +404,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		response.setContentType("text/plain");
 		response.println("The invocation parameters could not be read!");
 		response.println("Exception-Message: " + e.getMessage());
-		connector.logError("Request coding exception in invocation request " + request.getPath() + " for session "
-				+ sid);
+		connector.logError(
+				"Request coding exception in invocation request " + request.getPath() + " for session " + sid);
 	}
 
 	/**
@@ -540,13 +523,12 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * encapsulation of decoding the invocation parameters from the content stream of the HTTP request.
 	 * 
-	 * @param request
-	 *            a HttpRequest
+	 * @param request a HttpRequest
 	 * 
 	 * @return an Object[]
 	 */
-	private Serializable[] decodeInvocationParameters(HttpRequest request) throws ConnectorException,
-			InvalidCodingException {
+	private Serializable[] decodeInvocationParameters(HttpRequest request)
+			throws ConnectorException, InvalidCodingException {
 		String requestString = request.getContentString();
 
 		// in the decoder a \n before each important tag is assumed
@@ -582,10 +564,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * method handling the request for a new session
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 */
 	private void createSessionRequest(HttpRequest request, HttpResponse response) {
@@ -657,8 +637,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		} catch (AgentNotKnownException e) {
 			sendUnauthorizedResponse(response, null, request.getRemoteAddress() + ": login denied for user " + user);
 		} catch (L2pSecurityException e) {
-			sendUnauthorizedResponse(response, null, request.getRemoteAddress()
-					+ ": unauth access - prob. login problems");
+			sendUnauthorizedResponse(response, null,
+					request.getRemoteAddress() + ": unauth access - prob. login problems");
 		} catch (Exception e) {
 			sendInternalErrorResponse(response,
 					"The server was unable to process your request because of an internal exception!",
@@ -700,10 +680,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * handles a detach session request
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 */
 	private void detachSessionRequest(HttpRequest request, HttpResponse response) throws AddressNotAllowedException {
@@ -733,10 +711,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * handles a attach session request
 	 * 
-	 * @param request
-	 *            a HttpRequest
-	 * @param response
-	 *            a HttpResponse
+	 * @param request a HttpRequest
+	 * @param response a HttpResponse
 	 * 
 	 */
 	private void attachSessionRequest(HttpRequest request, HttpResponse response) {
@@ -785,15 +761,12 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	/**
 	 * encapsulates the coding of a service method invocation result in terms of this protocol.
 	 * 
-	 * @param result
-	 *            an Object
+	 * @param result an Object
 	 * 
 	 * @return a String The coding of the resulting object as String to be send as http response content.
 	 * 
-	 * @exception ParameterTypeNotImplementedException
-	 *                The class of the result cannot be coded via this protocol
-	 * @exception ConnectorException
-	 *                Internal problems
+	 * @exception ParameterTypeNotImplementedException The class of the result cannot be coded via this protocol
+	 * @exception ConnectorException Internal problems
 	 * 
 	 */
 	private String getResultCode(Object result) throws CodingException {

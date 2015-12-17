@@ -4,7 +4,6 @@ package i5.las2peer.httpConnector.coder;
  * Basic Exception for all coding related exceptions in this package
  *
  */
-
 public class CodingException extends Exception {
 
 	private static final long serialVersionUID = 5836170373639579067L;

@@ -5,81 +5,64 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-
 /**
- * The Class SomeSerializable is a class for testing the Serialization methods
- * of the {@link XmlCoder} / {@link XmlDecoder} and to demonstrate how serialization
- * works at all.
+ * The Class SomeSerializable is a class for testing the Serialization methods of the {@link XmlCoder} /
+ * {@link XmlDecoder} and to demonstrate how serialization works at all.
  * <p>
- * The class itself has one field (j), which would be serialized by standard
- * java procedures. The field i of the super class {@link SomeClass} won't be
- * serialized at all since SomeClass does not implement Serializable.
- * Therefore, if this value is to be serialized, the class SomeSerializable
- * has to implement the writeObject and readObject methods to care about the
- * i field.
+ * The class itself has one field (j), which would be serialized by standard java procedures. The field i of the super
+ * class {@link SomeClass} won't be serialized at all since SomeClass does not implement Serializable. Therefore, if
+ * this value is to be serialized, the class SomeSerializable has to implement the writeObject and readObject methods to
+ * care about the i field.
  * <p>
- * Next point in the demonstration is, that the standard constructor of the
- * superclass ({@link SomeClass}) is called in the deserialization.
- * It is the standard constructor of the first superclass not implementing
- * Serializable. If this class does not have a standard constructor, an exception
- * is thrown during the deserialization process.
+ * Next point in the demonstration is, that the standard constructor of the superclass ({@link SomeClass}) is called in
+ * the deserialization. It is the standard constructor of the first superclass not implementing Serializable. If this
+ * class does not have a standard constructor, an exception is thrown during the deserialization process.
  * <p>
- * Feel free to comment out the constructor of SomeClass or the writeObject and
- * readObject methods of this class to observe the described behaviour while running
- * the {@link SerializableTest} TestCase.
+ * Feel free to comment out the constructor of SomeClass or the writeObject and readObject methods of this class to
+ * observe the described behaviour while running the {@link SerializableTest} TestCase.
  *
  *
- * @author Holger Jan&szlig;en 
+ * @author Holger Jan&szlig;en
  */
+public class SomeSerializable extends SomeClass implements Serializable {
 
-public class SomeSerializable extends SomeClass implements Serializable
-{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -956756823889928006L;
-	
-	
+
 	int j = -1;
-	
-	public SomeSerializable () {
-		super (100);
-		
+
+	public SomeSerializable() {
+		super(100);
+
 		System.out.println("Standard Constructor of SomeSerializable");
 	}
-	
-	
-	public SomeSerializable ( int i ) {
-		super (i);
-		
-		j = i+10;
-		
+
+	public SomeSerializable(int i) {
+		super(i);
+
+		j = i + 10;
+
 		System.out.println("Special Constructor of SomeSerializable");
 	}
-	
-	
-	public int getJ () {
+
+	public int getJ() {
 		return j;
 	}
-	
-	private void writeObject ( ObjectOutputStream oos ) throws IOException {
+
+	private void writeObject(ObjectOutputStream oos) throws IOException {
 		oos.defaultWriteObject();
-		
-		oos.writeInt ( i );
-		
+
+		oos.writeInt(i);
+
 		System.out.println("Writing...");
-		
+
 	}
-	
-	
-	private void readObject ( ObjectInputStream oos ) throws ClassNotFoundException, IOException {
+
+	private void readObject(ObjectInputStream oos) throws ClassNotFoundException, IOException {
 		oos.defaultReadObject();
-		
-		i = oos.readInt ();
-		
+
+		i = oos.readInt();
+
 		System.out.println("Reading...");
 	}
-		
-}
 
+}

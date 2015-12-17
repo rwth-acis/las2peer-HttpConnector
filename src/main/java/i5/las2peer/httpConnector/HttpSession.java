@@ -1,12 +1,12 @@
 package i5.las2peer.httpConnector;
 
+import java.util.Date;
+import java.util.HashSet;
+
 import i5.httpServer.HttpRequest;
 import i5.las2peer.api.ConnectorException;
 import i5.las2peer.security.Mediator;
 import i5.las2peer.tools.SimpleTools;
-
-import java.util.Date;
-import java.util.HashSet;
 
 /**
  * a session object storing all session relevant information for an HTTP connector session
@@ -66,7 +66,8 @@ public class HttpSession {
 	}
 
 	/**
-	 * get the timestamp of the last usage 
+	 * get the timestamp of the last usage
+	 * 
 	 * @return (unix) timestamp of the last session usage
 	 */
 	public long getLastAccess() {
@@ -112,7 +113,7 @@ public class HttpSession {
 		if (persistentTimeout <= 0)
 			return false;
 
-		//System.out.println( new Date().getTime()  - lastAccess);
+		// System.out.println( new Date().getTime() - lastAccess);
 
 		return (new Date().getTime() - lastAccess) > persistentTimeout;
 	}
@@ -136,7 +137,7 @@ public class HttpSession {
 	}
 
 	/**
-	 * get the session's expiration time in ms 
+	 * get the session's expiration time in ms
 	 * 
 	 * @return expiration timeout
 	 */
@@ -154,9 +155,8 @@ public class HttpSession {
 	}
 
 	/**
-	 * has this session been initialized as persistent session
-	 * (i.e. a session, where the remote client may detach from and the agent at the node will 
-	 * still be working and collecting all incoming messages)
+	 * has this session been initialized as persistent session (i.e. a session, where the remote client may detach from
+	 * and the agent at the node will still be working and collecting all incoming messages)
 	 * 
 	 * @return true, if this session may use the persistent mode
 	 */
@@ -174,7 +174,7 @@ public class HttpSession {
 	/**
 	 * is the remote client currently attached to this session
 	 * 
-	 * @return true if this session is currently attached 
+	 * @return true if this session is currently attached
 	 */
 	public boolean isAttached() {
 		return bIsAttached;
@@ -268,11 +268,10 @@ public class HttpSession {
 	private static HashSet<String> hsExistingSessionId = new HashSet<String>();
 
 	/**
-	 * get the remote (ip) address of the client
-	 * (e.g. to check next request)
+	 * get the remote (ip) address of the client (e.g. to check next request)
 	 * 
 	 * @param request
-	 * @return remote host of this session  
+	 * @return remote host of this session
 	 */
 	private static String getRemoteHost(HttpRequest request) {
 		String result = request.getRemoteAddress().substring(0, request.getRemoteAddress().lastIndexOf(":") - 1);
