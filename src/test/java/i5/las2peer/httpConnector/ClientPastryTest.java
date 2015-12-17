@@ -26,7 +26,7 @@ import i5.las2peer.tools.SimpleTools;
 
 public class ClientPastryTest {
 
-	public static final String testServiceClass = "i5.las2peer.testing.TestService"; 
+	public static final String testServiceClass = i5.las2peer.testing.TestService.class.getName();
 	
 	private PastryNodeImpl node;
 	
