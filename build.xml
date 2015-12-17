@@ -7,10 +7,6 @@
 	<property name="ivy.deliver.revision" value="${ivy.revision}" />
 	<property name="ivy.pom.version" value="${ivy.revision}" />
 	
-	<presetdef name="javac">
-		<javac includeantruntime="false" />
-	</presetdef>
-	
     <property name="ivy.install.version" value="2.3.0" />
     <property name="ivy.jar.dir" value="${basedir}/etc/ivy" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
@@ -52,7 +48,7 @@
             dest="${ivy.jar.file}" usetimestamp="true"/>
     </target>
 
-    <target name="install-ivy" depends="download-ivy" description="--> install ivy">
+    <target name="install-ivy" depends="download-ivy">
         <path id="ivy.lib.path">
             <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
         </path>
@@ -66,7 +62,7 @@
         <ivy:retrieve type="jar"/>
     </target>
 	
-	<target name="deploy-snapshot" depends="jar">
+	<target name="deploy-snapshot" depends="jar" description="--> deploy as snapshot to archiva">
 		
 		<property name="sn" value="${ivy.deliver.revision}-SNAPSHOT" />
 		<local name="ivy.deliver.revision"/>
@@ -145,6 +141,7 @@
             classpathref="libraries"
             debug="on"
             encoding="UTF-8"
+			includeantruntime="false"
 		/>
 		<copy todir="${tmp.classes}">
 			<fileset dir="${src.main}">
@@ -160,6 +157,7 @@
             classpathref="libraries"
             debug="on"
             encoding="UTF-8"
+			includeantruntime="false"
 		/>
 		<copy todir="${tmp.junit}">
 			<fileset dir="${src.junit}">
@@ -180,7 +178,7 @@
 		</jar>
 	</target>
 	
-	<target name="java_doc" depends="init_doc">
+	<target name="javadoc" depends="init_doc" description="--> javadoc">
         <javadoc destdir="${export.doc}"
 			author="true"
 			version="true"
@@ -200,7 +198,7 @@
 	
 	<!-- Junit Testing -->
 	
-	<target name="junit" depends="junit_tests, junit_clean" />
+	<target name="junit" depends="junit_tests, junit_clean" description="--> junit" />
 	
 	<target name="init_junit" depends="init_general">
 		<mkdir dir="${junit.report}" />
@@ -231,16 +229,12 @@
 	
 	<!-- Cleanup -->
 	
-	<target name="clean">
+	<target name="clean" description="--> clean">
 		<delete dir="${tmp}" />
-		<delete dir="log" />
+		<delete dir="${export}" />
+		<delete dir="${lib}" />
 	</target>
 	
-	<target name="clean_deps">
-        <delete dir="${lib}" />
-	</target>
-	
-	
-	<target name="all" depends="jar, junit, java_doc, clean" />
+	<target name="all" depends="clean, jar, junit, javadoc" description="--> all" />
 	
 </project>
