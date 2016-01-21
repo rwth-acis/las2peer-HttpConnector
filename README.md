@@ -14,4 +14,6 @@ For all new services, please use the
 which already contains the pre-build Web-Connector a newer version of the HTTP connector
 that enables RESTful access to LAS2peer.
 
-Build Status: [![Build Status](https://api.travis-ci.org/rwth-acis/LAS2peer-HttpConnector.png)](https://travis-ci.org/rwth-acis/LAS2peer-HttpConnector)  
+Jenkins: [![Build Status](http://layers.dbis.rwth-aachen.de/jenkins/buildStatus/icon?job=las2peer HTTP Connector)](http://layers.dbis.rwth-aachen.de/jenkins/job/las2peer%20HTTP%20Connector/)
+
+Travis CI: [![Build Status](https://travis-ci.org/rwth-acis/LAS2peer-HttpConnector.svg?branch=master)](https://travis-ci.org/rwth-acis/LAS2peer-HttpConnector)
