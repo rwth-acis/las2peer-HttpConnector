@@ -18,6 +18,7 @@ import i5.las2peer.httpConnector.client.ServerErrorException;
 import i5.las2peer.httpConnector.client.TimeoutException;
 import i5.las2peer.httpConnector.client.UnableToConnectException;
 import i5.las2peer.p2p.PastryNodeImpl;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.persistency.MalformedXMLException;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
@@ -26,7 +27,7 @@ import i5.las2peer.tools.SimpleTools;
 
 public class ClientPastryTest {
 
-	public static final String testServiceClass = i5.las2peer.testing.TestService.class.getName();
+	public static final ServiceNameVersion testServiceClass = new ServiceNameVersion(i5.las2peer.testing.TestService.class.getName(),"1.0");
 
 	private PastryNodeImpl node;
 
@@ -72,9 +73,9 @@ public class ClientPastryTest {
 		c.setSessionTimeout(1000);
 		c.connect();
 
-		c.invoke(testServiceClass, "storeEnvelopeString", "ein test");
+		c.invoke(testServiceClass.getName(), "storeEnvelopeString", "ein test");
 
-		Object result = c.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+		Object result = c.invoke(testServiceClass.getName(), "getEnvelopeString", new Object[0]);
 
 		assertEquals("ein test", result);
 
@@ -89,7 +90,7 @@ public class ClientPastryTest {
 		c.connect();
 
 		try {
-			result = c2.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+			result = c2.invoke(testServiceClass.getName(), "getEnvelopeString", new Object[0]);
 			fail("AccessDeniedException expected");
 		} catch (AccessDeniedException e) {
 		}

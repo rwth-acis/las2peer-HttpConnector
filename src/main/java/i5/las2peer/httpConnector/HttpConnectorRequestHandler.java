@@ -764,9 +764,9 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 * @param result an Object
 	 * 
 	 * @return a String The coding of the resulting object as String to be send as http response content.
+	 * @throws CodingException 
 	 * 
 	 * @exception ParameterTypeNotImplementedException The class of the result cannot be coded via this protocol
-	 * @exception ConnectorException Internal problems
 	 * 
 	 */
 	private String getResultCode(Object result) throws CodingException {

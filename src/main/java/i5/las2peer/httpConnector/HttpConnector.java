@@ -360,7 +360,7 @@ public class HttpConnector extends Connector {
 	/**
 	 * Logs a request.
 	 * 
-	 * @param message
+	 * @param request
 	 */
 	void logRequest(String request) {
 		logStream.println(dateFormat.format(new Date()) + "\t Request:" + request);
@@ -369,12 +369,14 @@ public class HttpConnector extends Connector {
 		if (lastServiceClassNamePosition > 0) {
 			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			Agent service = null;
+			/* temporarily disabled
 			try {
 				service = myNode.getServiceAgent(serviceClass);
 			} catch (AgentNotKnownException e) {
 				// Should be known..
 				e.printStackTrace();
 			}
+			*/
 			myNode.observerNotice(Event.HTTP_CONNECTOR_REQUEST, myNode.getNodeId(), service, request);
 		}
 		// Not a service call

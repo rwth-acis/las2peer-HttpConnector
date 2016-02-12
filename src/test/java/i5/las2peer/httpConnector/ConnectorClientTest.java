@@ -28,6 +28,7 @@ import i5.las2peer.httpConnector.client.TimeoutException;
 import i5.las2peer.httpConnector.client.UnableToConnectException;
 import i5.las2peer.httpConnector.coder.ParameterTypeNotImplementedException;
 import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.persistency.MalformedXMLException;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
@@ -48,7 +49,7 @@ public class ConnectorClientTest {
 	private UserAgent testAgent;
 	private static final String testPass = "adamspass";
 
-	private static final String testServiceClass = "i5.las2peer.testing.TestService";
+	private static final ServiceNameVersion testServiceClass = new ServiceNameVersion("i5.las2peer.testing.TestService","1.0");
 
 	@Before
 	public void startServer() throws Exception {
@@ -123,7 +124,7 @@ public class ConnectorClientTest {
 	public void testNotExistingMethod() {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 		try {
-			c.invoke(testServiceClass, "dummy");
+			c.invoke(testServiceClass.getName(), "dummy");
 		} catch (NotFoundException e) {
 			// that's intended
 		} catch (ConnectorClientException e) {
@@ -199,9 +200,9 @@ public class ConnectorClientTest {
 
 		Object[] params = new Object[] { new Integer(10), "hallo", new Long(100), new Boolean(true) };
 
-		Object result = c.invoke(testServiceClass, "multipleArguments", params);
+		Object result = c.invoke(testServiceClass.getName(), "multipleArguments", params);
 		System.out.println("Result of the call: " + result);
-		result = c.invoke(testServiceClass, "multipleArguments2", params);
+		result = c.invoke(testServiceClass.getName(), "multipleArguments2", params);
 		System.out.println("Result of the call: " + result);
 	}
 
@@ -216,15 +217,15 @@ public class ConnectorClientTest {
 		try {
 			c.connect();
 
-			Object result = c.invoke(testServiceClass, "counter");
+			Object result = c.invoke(testServiceClass.getName(), "counter");
 			assertEquals(new Integer(1), result);
 			// System.out.println ( "Response of the invoke-request: " + result );
 
-			result = c.invoke(testServiceClass, "counter");
+			result = c.invoke(testServiceClass.getName(), "counter");
 			assertEquals(result, new Integer(2));
 			// System.out.println ( "Response of the invoke-request: " + result );
 
-			result = c.invoke(testServiceClass, "counter");
+			result = c.invoke(testServiceClass.getName(), "counter");
 			assertEquals(result, new Integer(3));
 			// System.out.println ( "Response of the invoke-request: " + result );
 
@@ -245,7 +246,7 @@ public class ConnectorClientTest {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 
 		try {
-			c.invoke(testServiceClass, "exceptionThrower");
+			c.invoke(testServiceClass.getName(), "exceptionThrower");
 		} catch (ServerErrorException e) {
 			assertNotSame(e, e.getCause());
 			assertNotNull(e.getCause());
@@ -255,7 +256,7 @@ public class ConnectorClientTest {
 		}
 
 		try {
-			c.invoke(testServiceClass, "runtimeExceptionThrower");
+			c.invoke(testServiceClass.getName(), "runtimeExceptionThrower");
 		} catch (ServerErrorException e) {
 			assertNotSame(e, e.getCause());
 			assertNotNull(e.getCause());
@@ -263,7 +264,7 @@ public class ConnectorClientTest {
 		}
 
 		try {
-			c.invoke(testServiceClass, "myExceptionThrower");
+			c.invoke(testServiceClass.getName(), "myExceptionThrower");
 		} catch (ServerErrorException e) {
 			// hm, how to test this, if the server and the client run in the same jvm?!?
 		}
@@ -285,7 +286,7 @@ public class ConnectorClientTest {
 	public void testStringArrayResult() throws ConnectorClientException {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 
-		String[] test = (String[]) c.invoke(testServiceClass, "stringArrayReturner");
+		String[] test = (String[]) c.invoke(testServiceClass.getName(), "stringArrayReturner");
 
 		assertEquals(4, test.length);
 
@@ -294,7 +295,7 @@ public class ConnectorClientTest {
 		assertEquals("array", test[2]);
 		assertEquals("with Strings", test[3]);
 
-		test = (String[]) c.invoke(testServiceClass, "stringArrayReturner", (Object) new String[] { "test" });
+		test = (String[]) c.invoke(testServiceClass.getName(), "stringArrayReturner", (Object) new String[] { "test" });
 		assertEquals(1, test.length);
 		assertEquals("test", test[0]);
 
@@ -310,7 +311,7 @@ public class ConnectorClientTest {
 	public void testEmptyStringArrayResult() throws ConnectorClientException {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 
-		String[] result = (String[]) c.invoke(testServiceClass, "emptyStringArrayReturner");
+		String[] result = (String[]) c.invoke(testServiceClass.getName(), "emptyStringArrayReturner");
 
 		assertNotNull(result);
 		assertEquals(0, result.length);
@@ -325,7 +326,7 @@ public class ConnectorClientTest {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 
 		try {
-			c.invoke(testServiceClass, "getAHash");
+			c.invoke(testServiceClass.getName(), "getAHash");
 		} catch (ReturnTypeNotImplementedException e) {
 			// that's correct
 		} catch (ConnectorClientException e) {
@@ -344,7 +345,7 @@ public class ConnectorClientTest {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT);
 
 		try {
-			c.invoke(testServiceClass, "accessForbidden");
+			c.invoke(testServiceClass.getName(), "accessForbidden");
 		} catch (AccessDeniedException e) {
 			// correct
 		} catch (ConnectorClientException e) {
@@ -363,7 +364,7 @@ public class ConnectorClientTest {
 		String[] params = new String[] { "Hallo\nwach\n!", "Hallo", "wach", "!" };
 
 		try {
-			Object result = c.invoke(testServiceClass, "concatStrings", (Object) params);
+			Object result = c.invoke(testServiceClass.getName(), "concatStrings", (Object) params);
 			assertEquals(result, params[0] + params[1] + params[2] + params[3]);
 		} catch (Exception e) {
 			fail("Exception: " + e);
@@ -373,7 +374,7 @@ public class ConnectorClientTest {
 				"<hmm><xmltest>blablebla\n</xmltest>\n\t\t</hmm>", };
 
 		try {
-			Object result = c.invoke(testServiceClass, "concatStrings", (Object) params);
+			Object result = c.invoke(testServiceClass.getName(), "concatStrings", (Object) params);
 			assertEquals(result, params[0] + params[1] + params[2] + params[3]);
 		} catch (Exception e) {
 			fail("Exception: " + e);
@@ -386,7 +387,7 @@ public class ConnectorClientTest {
 		byte[] paramAB = new byte[] { 10, 20, 30, 125 };
 
 		try {
-			Object result = c.invoke(testServiceClass, "byteAdder", paramAB);
+			Object result = c.invoke(testServiceClass.getName(), "byteAdder", paramAB);
 
 			assertEquals(result, new Long(paramAB[0] + paramAB[1] + paramAB[2] + paramAB[3]));
 		} catch (Exception e) {
@@ -411,7 +412,7 @@ public class ConnectorClientTest {
 			paramArray[i - Byte.MIN_VALUE] = (byte) i;
 		}
 
-		byte[] result = (byte[]) c.invoke(testServiceClass, "byteArrayReturner", paramArray);
+		byte[] result = (byte[]) c.invoke(testServiceClass.getName(), "byteArrayReturner", paramArray);
 
 		assertEquals(paramArray.length, result.length);
 		for (int i = 0; i < result.length; i++)
@@ -429,7 +430,7 @@ public class ConnectorClientTest {
 		Random r = new Random();
 		r.nextBytes(ba);
 
-		result = (byte[]) c.invoke(testServiceClass, "byteArrayReturner", ba);
+		result = (byte[]) c.invoke(testServiceClass.getName(), "byteArrayReturner", ba);
 
 		assertEquals(ba.length, result.length);
 		for (int i = 0; i < result.length; i++)
@@ -460,7 +461,7 @@ public class ConnectorClientTest {
 			for (int j = 0; j < al.length; j++)
 				al[j] = r.nextLong();
 
-			long[] alResult = (long[]) c.invoke(testServiceClass, "longArrayReturner", al);
+			long[] alResult = (long[]) c.invoke(testServiceClass.getName(), "longArrayReturner", al);
 			assertEquals(al.length, alResult.length);
 
 			for (int j = 0; j < al.length; j++)
@@ -485,7 +486,7 @@ public class ConnectorClientTest {
 
 		java.util.Date test = new java.util.Date();
 
-		java.util.Date result = (java.util.Date) c.invoke(testServiceClass, "addADay", test);
+		java.util.Date result = (java.util.Date) c.invoke(testServiceClass.getName(), "addADay", test);
 
 		assertEquals(test.getTime() + 1000 * 60 * 60 * 24, result.getTime());
 	}
@@ -502,8 +503,8 @@ public class ConnectorClientTest {
 		assertTrue(c.isPersistent());
 		String sid = c.getSessionId();
 
-		Object result = c.invoke(testServiceClass, "counter");
-		c.invoke(testServiceClass, "setStoredString", "Hallo");
+		Object result = c.invoke(testServiceClass.getName(), "counter");
+		c.invoke(testServiceClass.getName(), "setStoredString", "Hallo");
 		System.out.println("First: " + result);
 
 		c.detach();
@@ -514,10 +515,10 @@ public class ConnectorClientTest {
 		Client d = new Client(HTTP_ADDRESS, HTTP_PORT, "" + testAgent.getId(), testPass, sid);
 		d.connect();
 
-		Object result2 = d.invoke(testServiceClass, "counter");
+		Object result2 = d.invoke(testServiceClass.getName(), "counter");
 		System.out.println("second: " + result2);
 
-		Object result3 = d.invoke(testServiceClass, "getStoredString");
+		Object result3 = d.invoke(testServiceClass.getName(), "getStoredString");
 		System.out.println("third: " + result3);
 		assertEquals("Hallo", result3);
 
@@ -578,9 +579,9 @@ public class ConnectorClientTest {
 		c.setSessionTimeout(1000);
 		c.connect();
 
-		c.invoke(testServiceClass, "storeEnvelopeString", "ein test");
+		c.invoke(testServiceClass.getName(), "storeEnvelopeString", "ein test");
 
-		Object result = c.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+		Object result = c.invoke(testServiceClass.getName(), "getEnvelopeString", new Object[0]);
 
 		assertEquals("ein test", result);
 
@@ -593,7 +594,7 @@ public class ConnectorClientTest {
 		c.connect();
 
 		try {
-			result = c2.invoke(testServiceClass, "getEnvelopeString", new Object[0]);
+			result = c2.invoke(testServiceClass.getName(), "getEnvelopeString", new Object[0]);
 			fail("AccessDeniedException expected");
 		} catch (AccessDeniedException e) {
 		}
@@ -613,9 +614,9 @@ public class ConnectorClientTest {
 		c.setSessionTimeout(1000);
 		c.connect();
 
-		c.invoke(testServiceClass, "storeGroupEnvelopeString", "ein test");
+		c.invoke(testServiceClass.getName(), "storeGroupEnvelopeString", "ein test");
 
-		Object result = c.invoke(testServiceClass, "getGroupEnvelopeString", new Object[0]);
+		Object result = c.invoke(testServiceClass.getName(), "getGroupEnvelopeString", new Object[0]);
 
 		assertEquals("ein test", result);
 
@@ -627,7 +628,7 @@ public class ConnectorClientTest {
 		c.setSessionOutdate(3000);
 		c.connect();
 
-		result = c2.invoke(testServiceClass, "getGroupEnvelopeString", new Object[0]);
+		result = c2.invoke(testServiceClass.getName(), "getGroupEnvelopeString", new Object[0]);
 		assertEquals("ein test", result);
 
 	}

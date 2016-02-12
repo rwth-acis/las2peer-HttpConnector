@@ -854,8 +854,6 @@ public class Client {
 	 * @return an Object
 	 *
 	 * @exception ConnectorClientException
-	 * @exception IOException
-	 * @exception InvalidCodingException
 	 *
 	 */
 	private Object interpretInvocationResult(InputStream content) throws ConnectorClientException {
