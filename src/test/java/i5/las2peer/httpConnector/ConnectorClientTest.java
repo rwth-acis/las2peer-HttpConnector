@@ -30,6 +30,7 @@ import i5.las2peer.httpConnector.coder.ParameterTypeNotImplementedException;
 import i5.las2peer.p2p.LocalNode;
 import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.persistency.MalformedXMLException;
+import i5.las2peer.security.GroupAgent;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
@@ -53,12 +54,22 @@ public class ConnectorClientTest {
 
 	@Before
 	public void startServer() throws Exception {
+		// init agents
+		UserAgent eve = MockAgentFactory.getEve();
+		eve.unlockPrivateKey("evespass");
+		UserAgent adam = MockAgentFactory.getAdam();
+		adam.unlockPrivateKey("adamspass");
+		UserAgent abel = MockAgentFactory.getAbel();
+		abel.unlockPrivateKey("abelspass");
+		GroupAgent group1 = MockAgentFactory.getGroup1();
+		group1.unlockPrivateKey(adam);
+		
 		// start Node
 		node = LocalNode.newNode();
-		node.storeAgent(MockAgentFactory.getEve());
-		node.storeAgent(MockAgentFactory.getAdam());
-		node.storeAgent(MockAgentFactory.getAbel());
-		node.storeAgent(MockAgentFactory.getGroup1());
+		node.storeAgent(eve);
+		node.storeAgent(adam);
+		node.storeAgent(abel);
+		node.storeAgent(group1);
 		node.launch();
 
 		ServiceAgent testService = ServiceAgent.createServiceAgent(testServiceClass, "a pass");
