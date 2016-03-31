@@ -6,7 +6,7 @@
 	</publications>
 	<dependencies>
 		<dependency org="commons-codec" name="commons-codec" rev="1.10" />
-		<dependency org="i5" name="las2peer" rev="0.5-SNAPSHOT" changing="true"/>
+		<dependency org="i5" name="las2peer" rev="${ivy.las2peer.version}" changing="true"/>
 		<dependency org="i5" name="i5-httpServer" rev="0.4" />
 	</dependencies>
 </ivy-module>
