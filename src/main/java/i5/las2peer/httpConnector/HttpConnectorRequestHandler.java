@@ -346,27 +346,15 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		// third: method name
 
 		try {
-			try {
-				Serializable result;
-				if (request.getContentLength() > 0) {
-					result = sess.getMediator().invoke(sRequest[1], sRequest[2], decodeInvocationParameters(request),
-							connector.preferLocalServices());
-				} else {
-					result = sess.getMediator().invoke(sRequest[1], sRequest[2], new Serializable[0],
-							connector.preferLocalServices());
-				}
-				sendInvocationSuccess(result, response);
-			} catch (UnlockNeededException e) {
-				// k, unlocking of the agent's secret key at the target node is needed!
-				if (retry) {
-					l2pNode.sendUnlockRequest(sess.getAgentId(), sess.getStoredPass(), e.getRemoteNode(),
-							e.getNodeKey());
-					invokeRequest(request, response, false);
-				} else {
-					sendSecurityProblems(request, response, sid,
-							new L2pSecurityException("Mediation seems to have failed", e));
-				}
+			Serializable result;
+			if (request.getContentLength() > 0) {
+				result = sess.getMediator().invoke(sRequest[1], sRequest[2], decodeInvocationParameters(request),
+						connector.preferLocalServices());
+			} else {
+				result = sess.getMediator().invoke(sRequest[1], sRequest[2], new Serializable[0],
+						connector.preferLocalServices());
 			}
+			sendInvocationSuccess(result, response);
 		} catch (NoSuchServiceException | TimeoutException | AgentNotKnownException e) {
 			sendNoSuchService(request, response, sRequest);
 		} catch (NoSuchServiceMethodException e) {
