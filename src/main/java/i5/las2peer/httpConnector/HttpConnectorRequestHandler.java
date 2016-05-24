@@ -21,7 +21,6 @@ import i5.las2peer.execution.L2pServiceException;
 import i5.las2peer.execution.NoSuchServiceException;
 import i5.las2peer.execution.NoSuchServiceMethodException;
 import i5.las2peer.execution.ServiceInvocationException;
-import i5.las2peer.execution.UnlockNeededException;
 import i5.las2peer.httpConnector.coder.CodingException;
 import i5.las2peer.httpConnector.coder.InvalidCodingException;
 import i5.las2peer.httpConnector.coder.ParamCoder;

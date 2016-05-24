@@ -13,7 +13,6 @@ import i5.httpServer.RequestHandler;
 import i5.las2peer.api.Connector;
 import i5.las2peer.api.ConnectorException;
 import i5.las2peer.logging.NodeObserver.Event;
-import i5.las2peer.p2p.AgentNotKnownException;
 import i5.las2peer.p2p.Node;
 import i5.las2peer.security.Agent;
 
@@ -367,7 +366,7 @@ public class HttpConnector extends Connector {
 
 		int lastServiceClassNamePosition = request.lastIndexOf("/");
 		if (lastServiceClassNamePosition > 0) {
-			String serviceClass = request.substring(1, lastServiceClassNamePosition);
+//			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			Agent service = null;
 			/* temporarily disabled
 			try {
