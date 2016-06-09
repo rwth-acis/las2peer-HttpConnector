@@ -6,16 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Random;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import i5.las2peer.httpConnector.client.AccessDeniedException;
 import i5.las2peer.httpConnector.client.AuthenticationFailedException;
 import i5.las2peer.httpConnector.client.Client;
@@ -35,6 +25,15 @@ import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Random;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * Test for the HTTP connector client (using HTTP).
  *
@@ -50,7 +49,8 @@ public class ConnectorClientTest {
 	private UserAgent testAgent;
 	private static final String testPass = "adamspass";
 
-	private static final ServiceNameVersion testServiceClass = new ServiceNameVersion("i5.las2peer.testing.TestService","1.0");
+	private static final ServiceNameVersion testServiceClass = new ServiceNameVersion(
+			"i5.las2peer.testing.TestService", "1.0");
 
 	@Before
 	public void startServer() throws Exception {
@@ -63,7 +63,7 @@ public class ConnectorClientTest {
 		abel.unlockPrivateKey("abelspass");
 		GroupAgent group1 = MockAgentFactory.getGroup1();
 		group1.unlockPrivateKey(adam);
-		
+
 		// start Node
 		node = LocalNode.newNode();
 		node.storeAgent(eve);
@@ -250,6 +250,8 @@ public class ConnectorClientTest {
 
 	/**
 	 * test of the answer when invoking a methods that throws an exception
+	 * 
+	 * @throws ConnectorClientException
 	 *
 	 */
 	@Test
@@ -503,8 +505,8 @@ public class ConnectorClientTest {
 	}
 
 	@Test
-	public void testPersistentSession()
-			throws AuthenticationFailedException, UnableToConnectException, ConnectorClientException {
+	public void testPersistentSession() throws AuthenticationFailedException, UnableToConnectException,
+			ConnectorClientException {
 		Client c = new Client(HTTP_ADDRESS, HTTP_PORT, "" + testAgent.getId(), testPass);
 		c.setTryPersistent(true);
 
@@ -613,9 +615,9 @@ public class ConnectorClientTest {
 	}
 
 	@Test
-	public void testGroupAccess()
-			throws MalformedXMLException, IOException, UnableToConnectException, AuthenticationFailedException,
-			TimeoutException, ServerErrorException, AccessDeniedException, NotFoundException, ConnectorClientException {
+	public void testGroupAccess() throws MalformedXMLException, IOException, UnableToConnectException,
+			AuthenticationFailedException, TimeoutException, ServerErrorException, AccessDeniedException,
+			NotFoundException, ConnectorClientException {
 
 		UserAgent adam = MockAgentFactory.getAdam();
 
