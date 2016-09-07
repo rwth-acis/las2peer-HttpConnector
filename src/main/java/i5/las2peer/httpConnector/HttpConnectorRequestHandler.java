@@ -1,19 +1,5 @@
 package i5.las2peer.httpConnector;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Hashtable;
-import java.util.concurrent.ConcurrentHashMap;
-
 import i5.httpServer.HttpRequest;
 import i5.httpServer.HttpResponse;
 import i5.httpServer.RequestHandler;
@@ -35,6 +21,20 @@ import i5.las2peer.security.L2pSecurityException;
 import i5.las2peer.security.Mediator;
 import i5.las2peer.security.PassphraseAgent;
 import i5.las2peer.tools.CryptoException;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Serializable;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A HttpServer RequestHandler for handling requests to the LAS2peer HTTP connector. Each request will be distributed to
@@ -132,8 +132,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			response.setStatus(HttpResponse.STATUS_FORBIDDEN);
 			response.setContentType("text/plain");
 			response.print("Access to this session not allowed from your host!");
-			connector.logError("Access to session " + request.getGetVar(SESSSION_GET_VAR) + " not allowed from address "
-					+ request.getRemoteAddress() + "!");
+			connector.logError("Access to session " + request.getGetVar(SESSSION_GET_VAR)
+					+ " not allowed from address " + request.getRemoteAddress() + "!");
 		}
 
 	}
@@ -247,8 +247,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		HttpSession session = htSessions.get(sid);
 
 		if (session == null) {
-			sendUnauthorizedResponse(response, "No corresponding session available!",
-					request.getRemoteAddress() + ": closesession request for unknown session " + sid);
+			sendUnauthorizedResponse(response, "No corresponding session available!", request.getRemoteAddress()
+					+ ": closesession request for unknown session " + sid);
 			return;
 		}
 
@@ -328,8 +328,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		}
 
 		if (sess == null) {
-			sendUnauthorizedResponse(response, "No corresponding session available!",
-					request.getRemoteAddress() + ": closesession request for unknown session " + sid);
+			sendUnauthorizedResponse(response, "No corresponding session available!", request.getRemoteAddress()
+					+ ": closesession request for unknown session " + sid);
 			return;
 		}
 
@@ -398,8 +398,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		response.setContentType("text/plain");
 		response.println("The invocation parameters could not be read!");
 		response.println("Exception-Message: " + e.getMessage());
-		connector.logError(
-				"Request coding exception in invocation request " + request.getPath() + " for session " + sid);
+		connector.logError("Request coding exception in invocation request " + request.getPath() + " for session "
+				+ sid);
 	}
 
 	/**
@@ -424,8 +424,7 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 * @param sid
 	 * @param e
 	 */
-	private void sendInvocationException(HttpRequest request, HttpResponse response, String sid,
-			L2pServiceException e) {
+	private void sendInvocationException(HttpRequest request, HttpResponse response, String sid, L2pServiceException e) {
 		// internal exception in service method
 		response.clearContent();
 		response.setStatus(HttpResponse.STATUS_INTERNAL_SERVER_ERROR);
@@ -522,8 +521,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 	 * 
 	 * @return an Object[]
 	 */
-	private Serializable[] decodeInvocationParameters(HttpRequest request)
-			throws ConnectorException, InvalidCodingException {
+	private Serializable[] decodeInvocationParameters(HttpRequest request) throws ConnectorException,
+			InvalidCodingException {
 		String requestString = request.getContentString();
 
 		// in the decoder a \n before each important tag is assumed
@@ -613,7 +612,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 			}
 			activeRequests.put(userAgent.getId(), requests);
 
-			Mediator mediator = l2pNode.getOrRegisterLocalMediator(userAgent);
+			Mediator mediator = l2pNode.createMediatorForAgent(userAgent);
+			l2pNode.registerReceiver(mediator);
 
 			HttpSession session = new HttpSession(mediator, request, passwd);
 			session.setTimeout(lTimeout);
@@ -636,8 +636,8 @@ public class HttpConnectorRequestHandler implements RequestHandler {
 		} catch (AgentNotKnownException e) {
 			sendUnauthorizedResponse(response, null, request.getRemoteAddress() + ": login denied for user " + user);
 		} catch (L2pSecurityException e) {
-			sendUnauthorizedResponse(response, null,
-					request.getRemoteAddress() + ": unauth access - prob. login problems");
+			sendUnauthorizedResponse(response, null, request.getRemoteAddress()
+					+ ": unauth access - prob. login problems");
 		} catch (Exception e) {
 			sendInternalErrorResponse(response,
 					"The server was unable to process your request because of an internal exception!",
