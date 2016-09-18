@@ -4,11 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
-import org.junit.Test;
-
 import i5.las2peer.api.ConnectorException;
 import i5.las2peer.persistency.MalformedXMLException;
 import i5.las2peer.security.L2pSecurityException;
@@ -16,13 +11,17 @@ import i5.las2peer.security.Mediator;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
 
+import java.io.IOException;
+
+import org.junit.Test;
+
 public class HttpSessionTest {
 
 	@Test
 	public void testConstructor() throws L2pSecurityException, MalformedXMLException, IOException {
 		UserAgent eve = MockAgentFactory.getEve();
 		eve.unlockPrivateKey("evespass");
-		Mediator evesMediator = new Mediator(eve);
+		Mediator evesMediator = new Mediator(null, eve);
 
 		HttpSession testee = new HttpSession(evesMediator, "aConnectionString", "a pass");
 
@@ -39,11 +38,10 @@ public class HttpSessionTest {
 	}
 
 	@Test
-	public void testPersistency()
-			throws InterruptedException, L2pSecurityException, MalformedXMLException, IOException {
+	public void testPersistency() throws InterruptedException, L2pSecurityException, MalformedXMLException, IOException {
 		UserAgent eve = MockAgentFactory.getEve();
 		eve.unlockPrivateKey("evespass");
-		Mediator evesMediator = new Mediator(eve);
+		Mediator evesMediator = new Mediator(null, eve);
 
 		HttpSession testee = new HttpSession(evesMediator, "aConnectionString", "a pass");
 
@@ -62,13 +60,13 @@ public class HttpSessionTest {
 	}
 
 	@Test
-	public void testConnectionString()
-			throws AddressNotAllowedException, L2pSecurityException, MalformedXMLException, IOException {
+	public void testConnectionString() throws AddressNotAllowedException, L2pSecurityException, MalformedXMLException,
+			IOException {
 		String connectionString = "a connection string";
 
 		UserAgent eve = MockAgentFactory.getEve();
 		eve.unlockPrivateKey("evespass");
-		Mediator evesMediator = new Mediator(eve);
+		Mediator evesMediator = new Mediator(null, eve);
 
 		HttpSession testee = new HttpSession(evesMediator, connectionString, "a pass");
 
@@ -86,7 +84,7 @@ public class HttpSessionTest {
 	public void testTimeout() throws MalformedXMLException, IOException, InterruptedException, L2pSecurityException {
 		UserAgent eve = MockAgentFactory.getEve();
 		eve.unlockPrivateKey("evespass");
-		Mediator evesMediator = new Mediator(eve);
+		Mediator evesMediator = new Mediator(null, eve);
 
 		HttpSession testee = new HttpSession(evesMediator, "aConnectionString", "a pass");
 		testee.setPersistent();
@@ -113,7 +111,7 @@ public class HttpSessionTest {
 	public void testAttaching() throws ConnectorException, MalformedXMLException, IOException, L2pSecurityException {
 		UserAgent eve = MockAgentFactory.getEve();
 		eve.unlockPrivateKey("evespass");
-		Mediator evesMediator = new Mediator(eve);
+		Mediator evesMediator = new Mediator(null, eve);
 
 		HttpSession testee = new HttpSession(evesMediator, "aConnectionString", "a pass");
 

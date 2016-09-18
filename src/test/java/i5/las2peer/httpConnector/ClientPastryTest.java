@@ -2,6 +2,13 @@ package i5.las2peer.httpConnector;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import i5.las2peer.httpConnector.client.AccessDeniedException;
 import i5.las2peer.httpConnector.client.AuthenticationFailedException;
 import i5.las2peer.httpConnector.client.Client;
@@ -17,13 +24,8 @@ import i5.las2peer.persistency.MalformedXMLException;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
+import i5.las2peer.testing.TestSuite;
 import i5.las2peer.tools.SimpleTools;
-
-import java.io.IOException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ClientPastryTest {
 
@@ -31,13 +33,12 @@ public class ClientPastryTest {
 			i5.las2peer.testing.TestService.class.getName(), "1.0");
 
 	private PastryNodeImpl node;
-
 	private HttpConnector connector;
 
 	@Before
 	public void setup() throws Exception {
 		// start a launcher
-		node = new PastryNodeImpl(9001, null);
+		node = TestSuite.launchNetwork(1).get(0);
 		node.launch();
 
 		UserAgent agent = MockAgentFactory.getEve();
@@ -103,7 +104,6 @@ public class ClientPastryTest {
 			fail("AccessDeniedException expected");
 		} catch (AccessDeniedException e) {
 		}
-
 	}
 
 }
