@@ -32,7 +32,6 @@ public class ClientPastryTest {
 			i5.las2peer.testing.TestService.class.getName(), "1.0");
 
 	private PastryNodeImpl node;
-
 	private HttpConnector connector;
 
 	@Before
@@ -103,7 +102,6 @@ public class ClientPastryTest {
 			fail("AccessDeniedException expected");
 		} catch (AccessDeniedException e) {
 		}
-
 	}
 
 }
