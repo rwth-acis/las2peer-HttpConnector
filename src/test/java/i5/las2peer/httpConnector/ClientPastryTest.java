@@ -17,6 +17,7 @@ import i5.las2peer.persistency.MalformedXMLException;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
+import i5.las2peer.testing.TestSuite;
 import i5.las2peer.tools.SimpleTools;
 
 import java.io.IOException;
@@ -37,8 +38,7 @@ public class ClientPastryTest {
 	@Before
 	public void setup() throws Exception {
 		// start a launcher
-		node = new PastryNodeImpl(9001, null);
-		node.launch();
+		node = TestSuite.launchNetwork(1).get(0);
 
 		UserAgent agent = MockAgentFactory.getEve();
 		agent.unlockPrivateKey("evespass");
