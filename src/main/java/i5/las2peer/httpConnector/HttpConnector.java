@@ -1,12 +1,5 @@
 package i5.las2peer.httpConnector;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.text.DateFormat;
-import java.util.Date;
-
 import i5.httpServer.HttpServer;
 import i5.httpServer.HttpsServer;
 import i5.httpServer.RequestHandler;
@@ -15,6 +8,13 @@ import i5.las2peer.api.ConnectorException;
 import i5.las2peer.logging.NodeObserver.Event;
 import i5.las2peer.p2p.Node;
 import i5.las2peer.security.Agent;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Starter class for registering the HTTP connector at the LAS2peer server.
@@ -80,8 +80,8 @@ public class HttpConnector extends Connector {
 	private boolean DEFAULT_ENABLE_CROSS_ORIGIN_RESOURCE_SHARING = false;
 	protected boolean enableCrossOriginResourceSharing = DEFAULT_ENABLE_CROSS_ORIGIN_RESOURCE_SHARING;
 
-	private boolean DEFAULT_PREFER_LOCAL_SERVICES = true;
-	protected boolean preferLocalServices = DEFAULT_PREFER_LOCAL_SERVICES;
+	private boolean ONLY_PREFER_LOCAL_SERVICES = false;
+	protected boolean onlyLocalServices = ONLY_PREFER_LOCAL_SERVICES;
 
 	private String DEFAULT_LOGFILE = "log/httpConnector.log";
 	private String logfile = DEFAULT_LOGFILE;
@@ -399,7 +399,7 @@ public class HttpConnector extends Connector {
 	 * @return true, if local running versions of services are preferred before broadcasting
 	 */
 	boolean preferLocalServices() {
-		return preferLocalServices;
+		return onlyLocalServices;
 	}
 
 }
