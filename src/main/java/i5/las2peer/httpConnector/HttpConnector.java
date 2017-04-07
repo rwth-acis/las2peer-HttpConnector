@@ -381,9 +381,9 @@ public class HttpConnector extends Connector {
 
 		int lastServiceClassNamePosition = request.lastIndexOf("/");
 		if (lastServiceClassNamePosition > 0) {
-			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			Agent service = null;
-			/* temporarily disabled
+			/* FIXME temporarily disabled
+			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			try {
 				service = myNode.getServiceAgent(serviceClass);
 			} catch (AgentNotKnownException e) {
