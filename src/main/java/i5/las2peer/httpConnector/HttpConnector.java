@@ -1,5 +1,12 @@
 package i5.las2peer.httpConnector;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.util.Date;
+
 import i5.httpServer.HttpServer;
 import i5.httpServer.HttpsServer;
 import i5.httpServer.RequestHandler;
@@ -8,13 +15,6 @@ import i5.las2peer.api.ConnectorException;
 import i5.las2peer.logging.NodeObserver.Event;
 import i5.las2peer.p2p.Node;
 import i5.las2peer.security.Agent;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.text.DateFormat;
-import java.util.Date;
 
 /**
  * Starter class for registering the HTTP connector at the LAS2peer server.
@@ -102,8 +102,9 @@ public class HttpConnector extends Connector {
 	public HttpConnector() throws FileNotFoundException {
 		setFieldValues();
 
-		if (enableFileAccess)
+		if (enableFileAccess) {
 			System.out.println("HttpConnector: Warning - File Access is enabled!");
+		}
 	}
 
 	/**
@@ -124,10 +125,12 @@ public class HttpConnector extends Connector {
 	 * @param port
 	 */
 	public void setPort(int port) {
-		if (port < 80)
+		if (port < 80) {
 			throw new IllegalArgumentException("illegal port number: " + port);
-		if (myNode != null)
+		}
+		if (myNode != null) {
 			throw new IllegalStateException("change of port only before startup!");
+		}
 
 		httpConnectorPort = port;
 	}
@@ -138,10 +141,12 @@ public class HttpConnector extends Connector {
 	 * @param port
 	 */
 	public void setHttpsPort(int port) {
-		if (port < 80)
+		if (port < 80) {
 			throw new IllegalArgumentException("illegal port number: " + port);
-		if (myNode != null)
+		}
+		if (myNode != null) {
 			throw new IllegalStateException("change of port only before startup!");
+		}
 
 		httpsConnectorPort = port;
 	}
@@ -166,15 +171,17 @@ public class HttpConnector extends Connector {
 
 	@Override
 	public void start(Node node) throws ConnectorException {
-		if (!startHttpConnector && !startHttpsConnector)
+		if (!startHttpConnector && !startHttpsConnector) {
 			throw new ConnectorException("either the http connector of the https connector have to be started!");
+		}
 
-		if (logStream == null)
+		if (logStream == null) {
 			try {
 				setLogFile(logfile);
 			} catch (FileNotFoundException e) {
 				throw new ConnectorException("cannot initialize standard log file at " + logfile, e);
 			}
+		}
 
 		myNode = node;
 
@@ -233,11 +240,13 @@ public class HttpConnector extends Connector {
 	public void stop() throws ConnectorException {
 
 		// stop the listener
-		if (http != null)
+		if (http != null) {
 			http.stopServer();
+		}
 
-		if (https != null)
+		if (https != null) {
 			https.stopServer();
+		}
 
 		try {
 			if (http != null) {
@@ -260,10 +269,12 @@ public class HttpConnector extends Connector {
 	 * send an interrupt to all sub servers (mainly for hard test shutdown)
 	 */
 	public void interrupt() {
-		if (http != null)
+		if (http != null) {
 			http.interrupt();
-		if (https != null)
+		}
+		if (https != null) {
 			https.interrupt();
+		}
 		System.out.println("interrupted!");
 	}
 
@@ -286,10 +297,12 @@ public class HttpConnector extends Connector {
 	 * @return the session time out
 	 */
 	long getSessionTimeout(long suggested) {
-		if (suggested < minSessionTimeoutMS)
+		if (suggested < minSessionTimeoutMS) {
 			suggested = minSessionTimeoutMS;
-		if (suggested > maxSessionTimeoutMS)
+		}
+		if (suggested > maxSessionTimeoutMS) {
 			suggested = maxSessionTimeoutMS;
+		}
 
 		return suggested;
 	}
@@ -309,10 +322,12 @@ public class HttpConnector extends Connector {
 	 * @return the persistent session timeout
 	 */
 	long getPersistentSessionTimeout(long suggested) {
-		if (suggested < minPersistentTimeoutMS)
+		if (suggested < minPersistentTimeoutMS) {
 			suggested = minPersistentTimeoutMS;
-		if (suggested > maxPersistentTimeoutMS)
+		}
+		if (suggested > maxPersistentTimeoutMS) {
 			suggested = maxPersistentTimeoutMS;
+		}
 
 		return suggested;
 	}
@@ -366,9 +381,9 @@ public class HttpConnector extends Connector {
 
 		int lastServiceClassNamePosition = request.lastIndexOf("/");
 		if (lastServiceClassNamePosition > 0) {
-//			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			Agent service = null;
-			/* temporarily disabled
+			/* FIXME temporarily disabled
+			String serviceClass = request.substring(1, lastServiceClassNamePosition);
 			try {
 				service = myNode.getServiceAgent(serviceClass);
 			} catch (AgentNotKnownException e) {
